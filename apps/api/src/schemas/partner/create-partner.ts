@@ -1,9 +1,9 @@
 import { z } from 'zod';
 
-import { contactSchema } from './contact-schema.js';
-import { partnerPlanDiscountSchema } from './partner-plan-discount-schema.js';
+import { contactRequest } from './contact.js';
+import { partnerPlanDiscountRequest } from './partner-plan-discount.js';
 
-export const partnerInputSchema = z
+export const createPartnerRequest = z
   .object({
     name: z.string().trim().min(1).optional(),
     slug: z.string().trim().min(1).optional(),
@@ -13,11 +13,7 @@ export const partnerInputSchema = z
     website: z.url().nullable().optional(),
     isFeatured: z.boolean().optional(),
     categoryId: z.string().min(1).optional(),
-    contacts: z.array(contactSchema).optional(),
-    discounts: z.array(partnerPlanDiscountSchema).optional(),
+    contacts: z.array(contactRequest).optional(),
+    discounts: z.array(partnerPlanDiscountRequest).optional(),
   })
-  .strict()
-  .meta({
-    id: 'PartnerInput',
-    description: 'Dados de um parceiro para criação ou atualização.',
-  });
+  .strict();

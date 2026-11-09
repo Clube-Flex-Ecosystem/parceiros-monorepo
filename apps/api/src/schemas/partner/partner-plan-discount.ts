@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const partnerPlanDiscountSchema = z
+export const partnerPlanDiscountRequest = z
   .object({
     planId: z.string().min(1),
     discountPercent: z.number().min(0).max(100),

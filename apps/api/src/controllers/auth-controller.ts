@@ -9,7 +9,7 @@ import { validateSchema } from '../helpers/validate-schema.js';
 import { BcryptHashProvider } from '../providers/bcrypt-hash-provider.js';
 import { JsonwebtokenJwtProvider } from '../providers/jsonwebtoken-jwt-provider.js';
 import { PrismaUserRepository } from '../repositories/prisma/user-repository.js';
-import { loginSchema } from '../schemas/auth/login-schema.js';
+import { loginRequest } from '../schemas/auth/login.js';
 import { GetCurrentUserUseCase } from '../usecases/auth/get-current-user.js';
 import { LoginUseCase } from '../usecases/auth/login.js';
 
@@ -29,7 +29,7 @@ const authUseCases = {
 };
 
 const login: RequestHandler = async (request, response) => {
-  const parsed = validateSchema(request.body, loginSchema);
+  const parsed = validateSchema(request.body, loginRequest);
   const result = await authUseCases.login.execute(parsed);
   const config = cookie(request, response);
 

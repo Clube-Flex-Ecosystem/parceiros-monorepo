@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const contactSchema = z
+export const contactRequest = z
   .object({
     type: z.enum(['phone', 'whatsapp']),
     value: z.string().trim().min(1),

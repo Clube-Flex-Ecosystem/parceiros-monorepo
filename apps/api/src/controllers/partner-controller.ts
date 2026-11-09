@@ -1,13 +1,12 @@
 import type { RequestHandler } from 'express';
 
-import { listPublicPartnersSchema } from '../schemas/partner/list-public-partners-schema.js';
-import { partnerInputSchema } from '../schemas/partner/partner-input-schema.js';
-import { partnerSlugParamsSchema } from '../schemas/partner/partner-slug-params-schema.js';
-import { updatePartnerSchema } from '../schemas/partner/update-partner-schema.js';
 import { validateSchema } from '../helpers/validate-schema.js';
+import { createPartnerRequest } from '../schemas/partner/create-partner.js';
+import { updatePartnerRequest } from '../schemas/partner/update-partner.js';
+import { updatePartnerStatusRequest } from '../schemas/partner/update-partner-status.js';
 
 const createPartner: RequestHandler = (request, response) => {
-  const parsed = validateSchema(request.body, partnerInputSchema);
+  const parsed = validateSchema(request.body, createPartnerRequest);
 
   void parsed;
 
@@ -15,35 +14,30 @@ const createPartner: RequestHandler = (request, response) => {
 };
 
 const updatePartner: RequestHandler = (request, response) => {
-  const parsed = validateSchema(
-    { params: request.params, body: request.body },
-    updatePartnerSchema,
-  );
+  const parsed = validateSchema(request.body, updatePartnerRequest);
 
   void parsed;
 
   return response.status(200).json({ ok: true });
 };
 
-const listPartners: RequestHandler = (request, response) => {
-  const parsed = validateSchema(request.query, listPublicPartnersSchema);
+const updatePartnerStatus: RequestHandler = (request, response) => {
+  const parsed = validateSchema(request.body, updatePartnerStatusRequest);
 
   void parsed;
 
   return response.status(200).json({ ok: true });
 };
 
-const getPartner: RequestHandler = (request, response) => {
-  const parsed = validateSchema(request.params, partnerSlugParamsSchema);
+const listPartners: RequestHandler = (_request, response) =>
+  response.status(200).json({ ok: true });
 
-  void parsed;
-
-  return response.status(200).json({ ok: true });
-};
+const getPartner: RequestHandler = (_request, response) => response.status(200).json({ ok: true });
 
 export const partnerController = {
   createPartner,
   updatePartner,
+  updatePartnerStatus,
 
   listPartners,
   getPartner,
