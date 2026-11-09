@@ -20,7 +20,7 @@ endpoints:
       body: ['Credencial administrativa.']
     response:
       status: '200'
-      body: ['{ data: AdminUser }; sessão autenticada.']
+      body: ['{ data: User }; sessão autenticada.']
     errors: ['401: credencial inválida.']
   - id: API-02
     use-case: UC-01
@@ -33,7 +33,7 @@ endpoints:
       body: []
     response:
       status: '200'
-      body: ['{ data: AdminUser }.']
+      body: ['{ data: User }.']
     errors: ['401: sessão ausente ou inválida.']
   - id: API-03
     use-case: UC-02
@@ -187,9 +187,9 @@ endpoints:
 
 ### Sessão administrativa
 
-`POST /auth/login` recebe a credencial administrativa. Em caso de sucesso, retorna `AdminUser` e inicia uma sessão administrativa.
+`POST /auth/login` recebe a credencial administrativa. Em caso de sucesso, retorna `User` e inicia uma sessão administrativa.
 
-`GET /auth/me` retorna `AdminUser` da sessão atual. Nunca expõe dados de credencial. Sem sessão válida, retorna `401`.
+`GET /auth/me` retorna `User` da sessão atual. Nunca expõe dados de credencial. Sem sessão válida, retorna `401`.
 
 ### Parceiros administrativos
 
@@ -213,7 +213,7 @@ As rotas em `/partners` não exigem sessão e só retornam parceiros `published`
 
 ## Estruturas compartilhadas
 
-### `AdminUser`
+### `User`
 
 ```json
 {

@@ -7,6 +7,6 @@ export type FormattedResponse<T> = {
   meta?: ResponseMeta;
 };
 
-export function formatResponse<T>(data: T, meta?: ResponseMeta): FormattedResponse<T> {
+export const formatResponse = <T>(data: T, meta?: ResponseMeta): FormattedResponse<T> => {
   return meta ? { data, meta } : { data };
-}
+};
