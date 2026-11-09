@@ -6,11 +6,13 @@ import swaggerUi from 'swagger-ui-express';
 import { createOpenApiDocument } from './docs/document.js';
 import { errorHandler } from './middlewares/error-handler.js';
 import { notFoundHandler } from './middlewares/not-found.js';
+import { rateLimiter } from './middlewares/rate-limit.js';
 import { routes } from '../routes/index.js';
 
 export const app = express();
 
 app.use(cors({ origin: true, credentials: true }));
+app.use(rateLimiter);
 app.use(cookieParser());
 app.use(express.json());
 

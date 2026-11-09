@@ -30,7 +30,10 @@ src/
 │   │   ├── document.ts
 │   │   └── openapi.ts
 │   └── middlewares/
-│       └── authenticated.ts
+│       ├── authenticated.ts
+│       ├── error-handler.ts
+│       ├── not-found.ts
+│       └── rate-limit.ts
 ├── routes/
 │   ├── auth-routes.ts
 │   ├── category-routes.ts
@@ -99,7 +102,7 @@ src/
 | `src/http/app.ts`           | Configura o Express, CORS com credenciais, leitura de cookies, Swagger e os middlewares globais.                                                                  |
 | `src/controllers/`          | Agrupa e valida as entradas HTTP por módulo funcional; autenticação, categorias e planos delegam para seus casos de uso, enquanto parceiros permanece provisório. |
 | `src/http/docs/`            | Mantém o registry OpenAPI e a geração da documentação Swagger.                                                                                                    |
-| `src/http/middlewares/`     | Contém autenticação por sessão, resposta de rota inexistente e tratamento de erros.                                                                               |
+| `src/http/middlewares/`     | Contém autenticação por sessão, limite de requisições, resposta de rota inexistente e tratamento de erros.                                                        |
 | `src/routes/`               | Declara as rotas HTTP por módulo, registra cada uma no OpenAPI e concentra seus prefixos no arquivo `index.ts`.                                                   |
 | `src/domains/errors/`       | Define erros de domínio, como `AppError`, com códigos HTTP padronizados.                                                                                          |
 | `src/domains/models/`       | Define os modelos User, Partner, Category, Contact, PartnerPlanDiscount e Plan.                                                                                   |
