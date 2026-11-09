@@ -93,7 +93,7 @@ src/
 | `src/routes/`               | Declara as rotas HTTP por módulo e concentra seus prefixos no arquivo `index.ts`.                                                             |
 | `src/domains/errors/`       | Define erros de domínio, como `AppError`, com códigos HTTP padronizados.                                                                      |
 | `src/domains/models/`       | Define os modelos User, Partner, Category, Contact, PartnerPlanDiscount e Plan.                                                               |
-| `src/domains/providers/`    | Define as abstrações de hash de credenciais e assinatura e validação de tokens JWT usadas pelos casos de uso.                                 |
+| `src/domains/providers/`    | Define as abstrações de hash de credenciais, tokens JWT e envio de e-mails usadas pelos casos de uso.                                         |
 | `src/domains/repositories/` | Define os contratos de acesso para User, Partner e suas entidades associadas.                                                                 |
 | `src/repositories/prisma/`  | Implementa os contratos de repositório com o cliente Prisma, sem tratamento local de erros de persistência.                                   |
 | `src/helpers/`              | Reúne funções auxiliares, como formatação de respostas e validação de entradas.                                                               |
