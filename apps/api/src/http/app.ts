@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import swaggerUi from 'swagger-ui-express';
 
 import { createOpenApiDocument } from './docs/document.js';
@@ -9,7 +10,8 @@ import { routes } from '../routes/index.js';
 
 export const app = express();
 
-app.use(cors());
+app.use(cors({ origin: true, credentials: true }));
+app.use(cookieParser());
 app.use(express.json());
 
 app.get('/docs/openapi.json', (_request, response) => {

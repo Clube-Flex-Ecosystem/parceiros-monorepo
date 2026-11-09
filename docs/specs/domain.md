@@ -16,11 +16,11 @@ entities:
     name: 'Parceiro'
     purpose: 'Representa uma empresa ou estabelecimento participante do catálogo.'
     attributes:
-      - 'nome, descrição, instruções gerais, site opcional e identificador público'
+      - 'nome, descrição, endereço opcional, instruções gerais, site opcional e identificador público'
       - 'estado: draft, published ou inactive'
-      - 'destaque e cupom geral opcional'
+      - 'destaque opcional'
     relationships:
-      - 'Pertence a uma categoria e pode possuir contatos, unidades e benefícios por plano.'
+      - 'Pertence a uma categoria e pode possuir contatos e descontos por plano.'
   - id: ENT-02
     name: 'Categoria'
     purpose: 'Organiza parceiros no catálogo público.'
@@ -30,32 +30,25 @@ entities:
       - 'É mantida em tabela própria e pode estar associada a vários parceiros; cada parceiro pertence a uma única categoria.'
   - id: ENT-03
     name: 'Contato'
-    purpose: 'Representa um canal de contato do parceiro ou de uma unidade.'
+    purpose: 'Representa um canal de contato do parceiro.'
     attributes:
       - 'tipo, número normalizado e identificação opcional'
     relationships:
-      - 'Pertence a um parceiro ou a uma unidade.'
+      - 'Pertence a um parceiro.'
   - id: ENT-04
-    name: 'Unidade'
-    purpose: 'Representa um local físico de atendimento de um parceiro.'
-    attributes:
-      - 'identificação, endereço completo em texto, horário e instruções específicas'
-    relationships:
-      - 'Pertence a um parceiro e pode possuir contatos próprios; parceiros de atendimento online podem não ter unidades.'
-  - id: ENT-05
-    name: 'Benefício'
-    purpose: 'Representa o desconto, condição ou cupom oferecido por um parceiro em um plano.'
+    name: 'Desconto por plano'
+    purpose: 'Representa o desconto percentual, a condição, o cupom e as instruções oferecidos por um parceiro em um plano.'
     attributes:
       - 'plano, percentual de desconto, condição, cupom e instruções'
     relationships:
-      - 'É o registro de ligação entre parceiro e plano; há no máximo um benefício por combinação de parceiro e plano.'
-  - id: ENT-06
+      - 'É o registro de ligação entre parceiro e plano; há no máximo um desconto por combinação de parceiro e plano.'
+  - id: ENT-05
     name: 'Plano'
     purpose: 'Representa uma modalidade do Clube Flex usada para definir o desconto de cada parceiro.'
     attributes:
       - 'identificador e nome'
     relationships:
-      - 'É mantido em tabela própria e possui um benefício de cada parceiro publicado.'
+      - 'É mantido em tabela própria e possui um desconto de cada parceiro publicado.'
 
 business-rules:
   - id: BR-01
@@ -67,9 +60,17 @@ business-rules:
   - id: BR-04
     description: 'Um parceiro inactive deixa de ser público, mas permanece disponível para edição e republicação no CMS.'
   - id: BR-05
-    description: 'A publicação exige nome, descrição, identificador público, categoria e um percentual de desconto para cada plano disponível; site, contatos, unidades, cupons e instruções adicionais são opcionais.'
+    description: 'A publicação exige nome, descrição, identificador público, categoria e um percentual de desconto para cada plano disponível; endereço, site, contatos, cupons e instruções adicionais são opcionais.'
   - id: BR-06
-    description: 'O salvamento preserva os dados completos do parceiro, incluindo categoria, contatos, unidades, benefícios por plano e cupons.'
+    description: 'O salvamento preserva os dados completos do parceiro, incluindo categoria, endereço, contatos, descontos por plano e cupons.'
+  - id: BR-07
+    description: 'Categoria, planos e percentuais de desconto são informações públicas do parceiro publicado.'
+  - id: BR-08
+    description: 'Categorias e planos são dados de referência persistidos em tabelas próprias. Cada desconto por plano referencia exatamente um parceiro e um plano, sem duplicidade nessa combinação.'
+  - id: BR-09
+    description: 'O administrador pode cadastrar, editar e remover categorias que não estejam associadas a parceiros.'
+  - id: BR-10
+    description: 'O administrador pode cadastrar, editar e remover planos que não estejam associados a descontos de parceiros.'
 
 use-cases:
   - id: UC-01
@@ -106,6 +107,26 @@ use-cases:
         'O sistema mostra somente parceiros publicados.',
       ]
     outcome: 'Visitante visualiza a listagem ou o detalhe de um parceiro disponível.'
+  - id: UC-05
+    actor: ACT-01
+    goal: 'Gerenciar categorias do catálogo.'
+    preconditions: ['Estar autenticado no CMS.']
+    main-flow:
+      [
+        'O administrador cadastra, edita ou remove uma categoria.',
+        'O sistema preserva categorias associadas a parceiros.',
+      ]
+    outcome: 'Categorias disponíveis para classificação de parceiros são mantidas.'
+  - id: UC-06
+    actor: ACT-01
+    goal: 'Gerenciar planos do Clube Flex.'
+    preconditions: ['Estar autenticado no CMS.']
+    main-flow:
+      [
+        'O administrador cadastra, edita ou remove um plano.',
+        'O sistema preserva planos associados a descontos de parceiros.',
+      ]
+    outcome: 'Planos disponíveis para definir descontos de parceiros são mantidos.'
 ---
 
 # Domínio — CMS de parceiros Clube Flex
@@ -120,8 +141,8 @@ use-cases:
 ### ENT-01 — Parceiro
 
 - **Representa:** uma empresa ou estabelecimento participante do catálogo.
-- **Atributos essenciais:** nome, descrição, instruções gerais, site opcional, identificador público, destaque, cupom geral opcional e estado.
-- **Relacionamentos:** pertence a uma categoria e pode possuir contatos, unidades e benefícios por plano.
+- **Atributos essenciais:** nome, descrição, endereço opcional, instruções gerais, site opcional, identificador público, destaque e estado.
+- **Relacionamentos:** pertence a uma categoria e pode possuir contatos e descontos por plano.
 
 ### ENT-02 — Categoria
 
@@ -131,25 +152,19 @@ use-cases:
 
 ### ENT-03 — Contato
 
-- **Representa:** telefone ou WhatsApp geral do parceiro ou específico de uma unidade.
-- **Relacionamentos:** pertence a um parceiro ou unidade.
+- **Representa:** telefone ou WhatsApp do parceiro.
+- **Relacionamentos:** pertence a um parceiro.
 
-### ENT-04 — Unidade
+### ENT-04 — Desconto por plano
 
-- **Representa:** um local físico de atendimento.
-- **Observação:** é opcional; parceiros de atendimento exclusivamente online não possuem unidade.
-- **Relacionamentos:** pertence a um parceiro e pode ter contatos próprios.
+- **Representa:** o desconto percentual, a condição, o cupom e as instruções aplicáveis a um plano.
+- **Relacionamentos:** pertence a um parceiro e a um plano; o percentual pode variar entre planos e só existe um desconto por combinação de parceiro e plano.
 
-### ENT-05 — Benefício
-
-- **Representa:** desconto, condição ou cupom do parceiro para um plano.
-- **Relacionamentos:** é o registro de ligação entre parceiro e plano; o percentual pode variar entre planos e só existe um benefício por combinação de parceiro e plano.
-
-### ENT-06 — Plano
+### ENT-05 — Plano
 
 - **Representa:** uma modalidade do Clube Flex usada para diferenciar descontos.
 - **Atributos essenciais:** identificador e nome.
-- **Relacionamentos:** cada parceiro publicado possui um benefício associado a cada plano disponível.
+- **Relacionamentos:** cada parceiro publicado possui um desconto associado a cada plano disponível.
 - **Persistência:** possui tabela própria de planos.
 
 ## Regras de negócio
@@ -158,10 +173,12 @@ use-cases:
 - **BR-02:** Apenas parceiros `published` são públicos.
 - **BR-03:** Parceiros `draft` podem ser editados e não são exibidos publicamente.
 - **BR-04:** Parceiros `inactive` deixam de ser públicos, preservando seus dados para edição ou republicação.
-- **BR-05:** A publicação exige nome, descrição, identificador público, categoria e um percentual de desconto para cada plano disponível. Site, contatos, unidades, cupons e instruções adicionais são opcionais.
-- **BR-06:** O salvamento preserva o conjunto completo de dados associados ao parceiro, incluindo a categoria e benefícios por plano.
+- **BR-05:** A publicação exige nome, descrição, identificador público, categoria e um percentual de desconto para cada plano disponível. Endereço, site, contatos, cupons e instruções adicionais são opcionais.
+- **BR-06:** O salvamento preserva o conjunto completo de dados associados ao parceiro, incluindo categoria, endereço, contatos e descontos por plano.
 - **BR-07:** Categoria, planos e percentuais de desconto são informações públicas do parceiro publicado.
-- **BR-08:** Categorias e planos são dados de referência persistidos em tabelas próprias. Cada benefício referencia exatamente um parceiro e um plano, sem duplicidade nessa combinação.
+- **BR-08:** Categorias e planos são dados de referência persistidos em tabelas próprias. Cada desconto por plano referencia exatamente um parceiro e um plano, sem duplicidade nessa combinação.
+- **BR-09:** O administrador pode cadastrar, editar e remover categorias que não estejam associadas a parceiros.
+- **BR-10:** O administrador pode cadastrar, editar e remover planos que não estejam associados a descontos de parceiros.
 
 ## Casos de uso
 
@@ -196,6 +213,22 @@ use-cases:
 - **Pré-condições:** nenhuma; o parceiro precisa estar publicado para o detalhe.
 - **Resultado:** visitante visualiza a listagem ou o detalhe de um parceiro publicado.
 - **Regras relacionadas:** BR-02
+
+### UC-05 — Gerenciar categorias
+
+- **Ator:** ACT-01
+- **Objetivo:** manter as categorias disponíveis para classificar parceiros.
+- **Pré-condições:** estar autenticado no CMS.
+- **Resultado:** categorias são criadas, editadas ou removidas quando não estão associadas a parceiros.
+- **Regras relacionadas:** BR-01, BR-09
+
+### UC-06 — Gerenciar planos
+
+- **Ator:** ACT-01
+- **Objetivo:** manter os planos usados para definir descontos de parceiros.
+- **Pré-condições:** estar autenticado no CMS.
+- **Resultado:** planos são criados, editados ou removidos quando não estão associados a descontos de parceiros.
+- **Regras relacionadas:** BR-01, BR-10
 
 ## Estados e transições
 

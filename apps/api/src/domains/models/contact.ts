@@ -5,8 +5,7 @@ export type Contact = {
   type: ContactType;
   value: string;
   label: string | null;
-  partnerId: string | null;
-  unitId: string | null;
+  partnerId: string;
   createdAt: Date;
   updatedAt: Date;
 };

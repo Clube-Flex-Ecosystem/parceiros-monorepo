@@ -1,7 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import { z } from 'zod';
-
-import { AppError } from '../../domains/errors/app-error.js';
+import { AppError } from '../domains/errors/app-error.js';
 
 export const validateSchema = <TSchema extends z.ZodType>(
   body: unknown,

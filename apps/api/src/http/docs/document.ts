@@ -2,7 +2,7 @@ import { OpenApiGeneratorV31 } from '@asteasolutions/zod-to-openapi';
 
 import { registry } from './openapi.js';
 
-export function createOpenApiDocument() {
+export const createOpenApiDocument = () => {
   const generator = new OpenApiGeneratorV31(registry.definitions);
 
   return generator.generateDocument({
@@ -12,4 +12,4 @@ export function createOpenApiDocument() {
     },
     openapi: '3.1.0',
   });
-}
+};

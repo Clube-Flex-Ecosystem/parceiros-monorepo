@@ -1,7 +1,8 @@
 import type { RequestHandler } from 'express';
 
-import { getCurrentUserSchema, loginSchema } from '../schemas/user-schema.js';
-import { validateSchema } from '../validations/zod/validate-schema.js';
+import { getCurrentUserSchema } from '../schemas/auth/get-current-user-schema.js';
+import { loginSchema } from '../schemas/auth/login-schema.js';
+import { validateSchema } from '../helpers/validate-schema.js';
 
 const login: RequestHandler = (request, response) => {
   const parsed = validateSchema(request.body, loginSchema);
@@ -19,7 +20,7 @@ const getMe: RequestHandler = (request, response) => {
   return response.status(200).json({ ok: true });
 };
 
-export const userController = {
+export const authController = {
   login,
   getMe,
 };

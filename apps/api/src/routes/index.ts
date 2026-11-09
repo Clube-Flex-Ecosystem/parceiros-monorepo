@@ -1,16 +1,15 @@
 import { Router } from 'express';
 
-import { adminPartnerRoutes, partnerRoutes } from './partner-routes.js';
+import { authRoutes } from './auth-routes.js';
 import { categoryRoutes } from './category-routes.js';
 import { planRoutes } from './plan-routes.js';
-import { userRoutes } from './user-routes.js';
+import { partnerRoutes } from './partner-routes.js';
 
 const routes = Router();
 
-routes.use('/auth', userRoutes);
-routes.use('/admin/partners', adminPartnerRoutes);
+routes.use('/auth', authRoutes);
 routes.use('/admin/categories', categoryRoutes);
 routes.use('/admin/plans', planRoutes);
-routes.use('/partners', partnerRoutes);
+routes.use('/admin/partners', partnerRoutes);
 
 export { routes };

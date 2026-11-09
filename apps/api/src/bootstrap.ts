@@ -1,6 +1,6 @@
 import 'dotenv/config';
 
-import { env } from './providers/env/index.js';
+import { env } from './config/env.js';
 import { app } from './http/app.js';
 
 const { PORT: port } = env;

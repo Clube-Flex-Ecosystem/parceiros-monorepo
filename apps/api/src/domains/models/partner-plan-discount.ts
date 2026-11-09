@@ -1,4 +1,4 @@
-export type Benefit = {
+export type PartnerPlanDiscount = {
   id: string;
   discountPercent: number;
   condition: string | null;

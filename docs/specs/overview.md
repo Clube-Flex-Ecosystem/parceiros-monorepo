@@ -22,13 +22,17 @@ delivery:
     - id: RF-01
       description: 'Autenticar a única conta administrativa para acesso ao painel.'
     - id: RF-02
-      description: 'Cadastrar, listar e editar parceiros com seus dados completos.'
+      description: 'Cadastrar, listar e editar parceiros com seus dados completos, incluindo endereço opcional e descontos percentuais por plano.'
     - id: RF-03
       description: 'Salvar, publicar, desativar e republicar parceiros.'
     - id: RF-04
       description: 'Exibir um catálogo público apenas com parceiros publicados.'
     - id: RF-05
       description: 'Exibir uma página pública de detalhes para cada parceiro publicado.'
+    - id: RF-06
+      description: 'Cadastrar, listar, editar e remover categorias disponíveis para os parceiros.'
+    - id: RF-07
+      description: 'Cadastrar, listar, editar e remover planos usados para definir os descontos dos parceiros.'
   success-criterion: 'O administrador publica e mantém um parceiro; visitantes consultam sua listagem e seus detalhes sem autenticação.'
 ---
 
@@ -58,10 +62,12 @@ O CMS de parceiros Clube Flex permite que uma única pessoa administradora mante
 ## Capacidades do produto
 
 - **RF-01:** Autenticar a única conta administrativa para acesso ao painel.
-- **RF-02:** Cadastrar, listar e editar parceiros, com categoria obrigatória, contatos, unidades opcionais, benefícios e percentuais por plano.
+- **RF-02:** Cadastrar, listar e editar parceiros, com categoria obrigatória, endereço e contatos opcionais, além de descontos percentuais por plano.
 - **RF-03:** Salvar como rascunho, publicar, desativar e republicar parceiros.
 - **RF-04:** Exibir somente parceiros publicados em um catálogo público responsivo.
 - **RF-05:** Exibir uma página de detalhes em URL própria para cada parceiro publicado.
+- **RF-06:** Cadastrar, listar, editar e remover categorias usadas na classificação dos parceiros.
+- **RF-07:** Cadastrar, listar, editar e remover planos usados para definir os descontos dos parceiros.
 
 ## Critério de validação
 

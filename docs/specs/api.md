@@ -1,7 +1,7 @@
 ---
 version: '1.0'
 name: 'cms-parceiros-clube-flex-api'
-description: 'Contratos para sessão administrativa, gestão de parceiros e consulta pública.'
+description: 'Contratos para sessão administrativa, gestão de parceiros, categorias e planos, e consulta pública.'
 
 api:
   base-path: '/'
@@ -132,7 +132,7 @@ endpoints:
       body: ['{ data: PublicPartner }.']
     errors: ['404: parceiro não encontrado ou indisponível.']
   - id: API-10
-    use-case: UC-02
+    use-case: UC-05
     method: 'GET'
     path: '/admin/categories'
     authorization: 'Administrador autenticado.'
@@ -145,7 +145,51 @@ endpoints:
       body: ['{ data: Category[] }.']
     errors: ['401: não autenticado.']
   - id: API-11
-    use-case: UC-02
+    use-case: UC-05
+    method: 'POST'
+    path: '/admin/categories'
+    authorization: 'Administrador autenticado.'
+    request:
+      params: []
+      query: []
+      body: ['CategoryInput.']
+    response:
+      status: '201'
+      body: ['{ data: Category }.']
+    errors: ['401: não autenticado.', '422: dados inválidos.']
+  - id: API-12
+    use-case: UC-05
+    method: 'PATCH'
+    path: '/admin/categories/{id}'
+    authorization: 'Administrador autenticado.'
+    request:
+      params: ['id da categoria.']
+      query: []
+      body: ['CategoryInput.']
+    response:
+      status: '200'
+      body: ['{ data: Category }.']
+    errors: ['401: não autenticado.', '404: categoria não encontrada.', '422: dados inválidos.']
+  - id: API-13
+    use-case: UC-05
+    method: 'DELETE'
+    path: '/admin/categories/{id}'
+    authorization: 'Administrador autenticado.'
+    request:
+      params: ['id da categoria.']
+      query: []
+      body: []
+    response:
+      status: '204'
+      body: []
+    errors:
+      [
+        '401: não autenticado.',
+        '404: categoria não encontrada.',
+        '409: categoria associada a parceiros.',
+      ]
+  - id: API-14
+    use-case: UC-06
     method: 'GET'
     path: '/admin/plans'
     authorization: 'Administrador autenticado.'
@@ -157,6 +201,50 @@ endpoints:
       status: '200'
       body: ['{ data: Plan[] }.']
     errors: ['401: não autenticado.']
+  - id: API-15
+    use-case: UC-06
+    method: 'POST'
+    path: '/admin/plans'
+    authorization: 'Administrador autenticado.'
+    request:
+      params: []
+      query: []
+      body: ['PlanInput.']
+    response:
+      status: '201'
+      body: ['{ data: Plan }.']
+    errors: ['401: não autenticado.', '422: dados inválidos.']
+  - id: API-16
+    use-case: UC-06
+    method: 'PATCH'
+    path: '/admin/plans/{id}'
+    authorization: 'Administrador autenticado.'
+    request:
+      params: ['id do plano.']
+      query: []
+      body: ['PlanInput.']
+    response:
+      status: '200'
+      body: ['{ data: Plan }.']
+    errors: ['401: não autenticado.', '404: plano não encontrado.', '422: dados inválidos.']
+  - id: API-17
+    use-case: UC-06
+    method: 'DELETE'
+    path: '/admin/plans/{id}'
+    authorization: 'Administrador autenticado.'
+    request:
+      params: ['id do plano.']
+      query: []
+      body: []
+    response:
+      status: '204'
+      body: []
+    errors:
+      [
+        '401: não autenticado.',
+        '404: plano não encontrado.',
+        '409: plano associado a descontos de parceiros.',
+      ]
 ---
 
 # API — CMS de parceiros Clube Flex
@@ -171,25 +259,35 @@ endpoints:
 
 ## Endpoints
 
-| ID     | Método  | Rota                          | Finalidade                                      |
-| ------ | ------- | ----------------------------- | ----------------------------------------------- |
-| API-01 | `POST`  | `/auth/login`                 | Inicia a sessão administrativa.                 |
-| API-02 | `GET`   | `/auth/me`                    | Retorna o administrador autenticado.            |
-| API-03 | `GET`   | `/admin/partners`             | Lista parceiros para o CMS.                     |
-| API-04 | `POST`  | `/admin/partners`             | Cria um parceiro.                               |
-| API-05 | `GET`   | `/admin/partners/{id}`        | Retorna um parceiro para edição.                |
-| API-06 | `PATCH` | `/admin/partners/{id}`        | Atualiza os dados de um parceiro.               |
-| API-07 | `PATCH` | `/admin/partners/{id}/status` | Altera o estado do parceiro.                    |
-| API-08 | `GET`   | `/partners`                   | Lista parceiros publicados.                     |
-| API-09 | `GET`   | `/partners/{slug}`            | Retorna o detalhe público de um parceiro.       |
-| API-10 | `GET`   | `/admin/categories`           | Lista categorias disponíveis para o formulário. |
-| API-11 | `GET`   | `/admin/plans`                | Lista planos disponíveis para o formulário.     |
+| ID     | Método   | Rota                          | Finalidade                                      |
+| ------ | -------- | ----------------------------- | ----------------------------------------------- |
+| API-01 | `POST`   | `/auth/login`                 | Inicia a sessão administrativa.                 |
+| API-02 | `GET`    | `/auth/me`                    | Retorna o administrador autenticado.            |
+| API-03 | `GET`    | `/admin/partners`             | Lista parceiros para o CMS.                     |
+| API-04 | `POST`   | `/admin/partners`             | Cria um parceiro.                               |
+| API-05 | `GET`    | `/admin/partners/{id}`        | Retorna um parceiro para edição.                |
+| API-06 | `PATCH`  | `/admin/partners/{id}`        | Atualiza os dados de um parceiro.               |
+| API-07 | `PATCH`  | `/admin/partners/{id}/status` | Altera o estado do parceiro.                    |
+| API-08 | `GET`    | `/partners`                   | Lista parceiros publicados.                     |
+| API-09 | `GET`    | `/partners/{slug}`            | Retorna o detalhe público de um parceiro.       |
+| API-10 | `GET`    | `/admin/categories`           | Lista categorias disponíveis para o formulário. |
+| API-11 | `POST`   | `/admin/categories`           | Cria uma categoria.                             |
+| API-12 | `PATCH`  | `/admin/categories/{id}`      | Atualiza uma categoria.                         |
+| API-13 | `DELETE` | `/admin/categories/{id}`      | Remove uma categoria sem parceiros associados.  |
+| API-14 | `GET`    | `/admin/plans`                | Lista planos disponíveis para o formulário.     |
+| API-15 | `POST`   | `/admin/plans`                | Cria um plano.                                  |
+| API-16 | `PATCH`  | `/admin/plans/{id}`           | Atualiza um plano.                              |
+| API-17 | `DELETE` | `/admin/plans/{id}`           | Remove um plano sem descontos associados.       |
 
 ### Sessão administrativa
 
 `POST /auth/login` recebe a credencial administrativa. Em caso de sucesso, retorna `User` e inicia uma sessão administrativa.
 
 `GET /auth/me` retorna `User` da sessão atual. Nunca expõe dados de credencial. Sem sessão válida, retorna `401`.
+
+### ConfiguraÃ§Ã£o da sessÃ£o
+
+A sessÃ£o administrativa Ã© mantida por cookie HTTP. O cookie Ã© `HttpOnly`, usa polÃ­tica `SameSite=Lax`, aceita domÃ­nio configurÃ¡vel e expira apÃ³s o perÃ­odo definido para a aplicaÃ§Ã£o, com sete dias como padrÃ£o.
 
 ### Parceiros administrativos
 
@@ -207,9 +305,11 @@ Os valores permitidos são `draft`, `published` e `inactive`. A alteração para
 
 As rotas em `/partners` não exigem sessão e só retornam parceiros `published`. O detalhe usa o `slug` público, nunca o identificador interno.
 
-### Dados de referência do CMS
+### Categorias do CMS
 
-`GET /admin/categories` e `GET /admin/plans` fornecem os valores persistidos que o formulário administrativo usa para selecionar a categoria e preencher os benefícios por plano. Estas rotas são somente de leitura; a gestão de categorias e planos não integra o fluxo do CMS nesta versão.
+`GET /admin/categories` lista as categorias disponíveis para o formulário administrativo. `POST /admin/categories` cria uma categoria e `PATCH /admin/categories/{id}` atualiza seu nome. `DELETE /admin/categories/{id}` só remove categorias sem parceiros associados e retorna `409` caso contrário.
+
+`GET /admin/plans` lista os planos persistidos que o formulário administrativo usa para preencher os descontos percentuais. `POST /admin/plans` cria um plano e `PATCH /admin/plans/{id}` atualiza seu nome. `DELETE /admin/plans/{id}` só remove planos sem descontos de parceiros associados e retorna `409` caso contrário.
 
 ## Estruturas compartilhadas
 
@@ -223,14 +323,22 @@ As rotas em `/partners` não exigem sessão e só retornam parceiros `published`
 }
 ```
 
-### `Category` e `Plan`
+### `Category`, `CategoryInput` e `Plan`
 
 ```json
 { "id": "academias", "name": "Academias" }
 ```
 
 ```json
+{ "name": "Academias" }
+```
+
+```json
 { "id": "plano-premium", "name": "Plano Premium" }
+```
+
+```json
+{ "name": "Plano Premium" }
 ```
 
 Categorias e planos são dados de referência persistidos em tabelas próprias. Seus IDs são usados em `categoryId` e `planId`.
@@ -245,19 +353,10 @@ Categorias e planos são dados de referência persistidos em tabelas próprias. 
   "generalInstructions": "Apresente sua identificação do Clube Flex.",
   "website": "https://exemplo.com.br",
   "isFeatured": false,
-  "generalCoupon": null,
   "categoryId": "academias",
+  "address": "Praça da Sé, 100 — Sé, São Paulo/SP, 01001-000",
   "contacts": [{ "type": "whatsapp", "label": "Atendimento", "value": "5511999999" }],
-  "units": [
-    {
-      "name": "Unidade Centro",
-      "address": "Praça da Sé, 100 — Sé, São Paulo",
-      "openingHours": "Segunda a sexta, das 6h às 22h",
-      "instructions": null,
-      "contacts": []
-    }
-  ],
-  "benefits": [
+  "discounts": [
     {
       "planId": "plano-basico",
       "discountPercent": 10,
@@ -269,10 +368,10 @@ Categorias e planos são dados de referência persistidos em tabelas próprias. 
 }
 ```
 
-- `name`, `slug`, `description`, `categoryId` e `benefits` são exigidos para publicação.
+- `name`, `slug`, `description`, `categoryId` e `discounts` são exigidos para publicação.
 - `slug` é único e compõe a URL pública do parceiro.
-- `units` pode ser uma lista vazia para parceiros exclusivamente online. Cada unidade possui um único campo `address` com o endereço completo em texto.
-- `benefits` possui exatamente um item para cada plano disponível.
+- `address` é opcional e armazena o endereço completo do parceiro. Parceiros exclusivamente online podem deixá-lo vazio.
+- `discounts` possui exatamente um item para cada plano disponível.
 - `discountPercent` é um número de 0 a 100, com casas decimais permitidas.
 - O estado não faz parte de `PartnerInput`.
 
@@ -284,7 +383,7 @@ Categorias e planos são dados de referência persistidos em tabelas próprias. 
   "name": "Academia Exemplo",
   "description": "Academia com musculação e aulas coletivas.",
   "category": { "id": "academias", "name": "Academias" },
-  "benefits": [
+  "discounts": [
     {
       "plan": { "id": "plano-premium", "name": "Plano Premium" },
       "discountPercent": 20,
@@ -296,4 +395,4 @@ Categorias e planos são dados de referência persistidos em tabelas próprias. 
 }
 ```
 
-`PublicPartner` também inclui, quando cadastrados, site, contatos, unidades, instruções gerais, cupom geral e destaque. O estado administrativo e identificadores internos não são expostos publicamente.
+`PublicPartner` também inclui, quando cadastrados, endereço, site, contatos, instruções gerais e destaque. O estado administrativo e identificadores internos não são expostos publicamente.
