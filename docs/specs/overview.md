@@ -1,35 +1,35 @@
 ---
-version: "1.0"
-name: "cms-parceiros-clube-flex-overview"
-description: "CMS para manter e publicar o catálogo de parceiros do Clube Flex."
+version: '1.0'
+name: 'cms-parceiros-clube-flex-overview'
+description: 'CMS para manter e publicar o catálogo de parceiros do Clube Flex.'
 
 product:
-  name: "CMS de parceiros Clube Flex"
+  name: 'CMS de parceiros Clube Flex'
   audience:
-    - "Administrador do Clube Flex"
-    - "Visitante público"
-  problem: "As informações dos parceiros precisam ser atualizadas e publicadas sem alterações manuais no site."
-  value-proposition: "Um painel centraliza os dados e os disponibiliza em um catálogo público confiável."
+    - 'Administrador do Clube Flex'
+    - 'Visitante público'
+  problem: 'As informações dos parceiros precisam ser atualizadas e publicadas sem alterações manuais no site.'
+  value-proposition: 'Um painel centraliza os dados e os disponibiliza em um catálogo público confiável.'
 
 delivery:
-  objective: "Disponibilizar a manutenção e publicação autônoma de um catálogo de parceiros."
-  primary-actor: "ACT-01"
+  objective: 'Disponibilizar a manutenção e publicação autônoma de um catálogo de parceiros.'
+  primary-actor: 'ACT-01'
   main-flow:
-    - "O administrador cadastra ou edita um parceiro no painel."
-    - "O administrador salva como rascunho ou publica um cadastro válido."
-    - "Visitantes encontram parceiros publicados no catálogo e acessam seus detalhes."
+    - 'O administrador cadastra ou edita um parceiro no painel.'
+    - 'O administrador salva como rascunho ou publica um cadastro válido.'
+    - 'Visitantes encontram parceiros publicados no catálogo e acessam seus detalhes.'
   capabilities:
     - id: RF-01
-      description: "Autenticar a única conta administrativa criada por seed, por sessão stateful e cookie HttpOnly."
+      description: 'Autenticar a única conta administrativa criada por seed, por sessão stateful e cookie HttpOnly.'
     - id: RF-02
-      description: "Cadastrar, listar e editar parceiros com seus dados completos."
+      description: 'Cadastrar, listar e editar parceiros com seus dados completos.'
     - id: RF-03
-      description: "Salvar, publicar, desativar e republicar parceiros."
+      description: 'Salvar, publicar, desativar e republicar parceiros.'
     - id: RF-04
-      description: "Exibir um catálogo público apenas com parceiros publicados."
+      description: 'Exibir um catálogo público apenas com parceiros publicados.'
     - id: RF-05
-      description: "Exibir uma página pública de detalhes para cada parceiro publicado."
-  success-criterion: "O administrador publica e mantém um parceiro; visitantes consultam sua listagem e seus detalhes sem autenticação."
+      description: 'Exibir uma página pública de detalhes para cada parceiro publicado.'
+  success-criterion: 'O administrador publica e mantém um parceiro; visitantes consultam sua listagem e seus detalhes sem autenticação.'
 ---
 
 # Overview — CMS de parceiros Clube Flex
@@ -66,4 +66,3 @@ O CMS de parceiros Clube Flex permite que uma única pessoa administradora mante
 ## Critério de validação
 
 O administrador publica e mantém um parceiro, e visitantes consultam sua listagem e seus detalhes sem autenticação.
-

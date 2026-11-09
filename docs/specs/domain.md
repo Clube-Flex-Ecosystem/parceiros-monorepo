@@ -1,101 +1,111 @@
 ---
-version: "1.0"
-name: "cms-parceiros-clube-flex-domain"
-description: "Atores, entidades e regras centrais do CMS de parceiros Clube Flex."
+version: '1.0'
+name: 'cms-parceiros-clube-flex-domain'
+description: 'Atores, entidades e regras centrais do CMS de parceiros Clube Flex.'
 
 actors:
   - id: ACT-01
-    name: "Administrador"
-    responsibility: "Manter os cadastros e controlar a publicação dos parceiros."
+    name: 'Administrador'
+    responsibility: 'Manter os cadastros e controlar a publicação dos parceiros.'
   - id: ACT-02
-    name: "Visitante público"
-    responsibility: "Consultar parceiros publicados e seus detalhes."
+    name: 'Visitante público'
+    responsibility: 'Consultar parceiros publicados e seus detalhes.'
 
 entities:
   - id: ENT-01
-    name: "Parceiro"
-    purpose: "Representa uma empresa ou estabelecimento participante do catálogo."
+    name: 'Parceiro'
+    purpose: 'Representa uma empresa ou estabelecimento participante do catálogo.'
     attributes:
-      - "nome, descrição, instruções gerais, site opcional e identificador público"
-      - "estado: draft, published ou inactive"
-      - "destaque e cupom geral opcional"
+      - 'nome, descrição, instruções gerais, site opcional e identificador público'
+      - 'estado: draft, published ou inactive'
+      - 'destaque e cupom geral opcional'
     relationships:
-      - "Pertence a uma categoria e pode possuir contatos, unidades e benefícios por plano."
+      - 'Pertence a uma categoria e pode possuir contatos, unidades e benefícios por plano.'
   - id: ENT-02
-    name: "Categoria"
-    purpose: "Organiza parceiros no catálogo público."
+    name: 'Categoria'
+    purpose: 'Organiza parceiros no catálogo público.'
     attributes:
-      - "nome"
+      - 'nome'
     relationships:
-      - "É mantida em tabela própria e pode estar associada a vários parceiros; cada parceiro pertence a uma única categoria."
+      - 'É mantida em tabela própria e pode estar associada a vários parceiros; cada parceiro pertence a uma única categoria.'
   - id: ENT-03
-    name: "Contato"
-    purpose: "Representa um canal de contato do parceiro ou de uma unidade."
+    name: 'Contato'
+    purpose: 'Representa um canal de contato do parceiro ou de uma unidade.'
     attributes:
-      - "tipo, número normalizado e identificação opcional"
+      - 'tipo, número normalizado e identificação opcional'
     relationships:
-      - "Pertence a um parceiro ou a uma unidade."
+      - 'Pertence a um parceiro ou a uma unidade.'
   - id: ENT-04
-    name: "Unidade"
-    purpose: "Representa um local físico de atendimento de um parceiro."
+    name: 'Unidade'
+    purpose: 'Representa um local físico de atendimento de um parceiro.'
     attributes:
-      - "identificação, endereço completo em texto, horário e instruções específicas"
+      - 'identificação, endereço completo em texto, horário e instruções específicas'
     relationships:
-      - "Pertence a um parceiro e pode possuir contatos próprios; parceiros de atendimento online podem não ter unidades."
+      - 'Pertence a um parceiro e pode possuir contatos próprios; parceiros de atendimento online podem não ter unidades.'
   - id: ENT-05
-    name: "Benefício"
-    purpose: "Representa o desconto, condição ou cupom oferecido por um parceiro em um plano."
+    name: 'Benefício'
+    purpose: 'Representa o desconto, condição ou cupom oferecido por um parceiro em um plano.'
     attributes:
-      - "plano, percentual de desconto, condição, cupom e instruções"
+      - 'plano, percentual de desconto, condição, cupom e instruções'
     relationships:
-      - "É o registro de ligação entre parceiro e plano; há no máximo um benefício por combinação de parceiro e plano."
+      - 'É o registro de ligação entre parceiro e plano; há no máximo um benefício por combinação de parceiro e plano.'
   - id: ENT-06
-    name: "Plano"
-    purpose: "Representa uma modalidade do Clube Flex usada para definir o desconto de cada parceiro."
+    name: 'Plano'
+    purpose: 'Representa uma modalidade do Clube Flex usada para definir o desconto de cada parceiro.'
     attributes:
-      - "identificador e nome"
+      - 'identificador e nome'
     relationships:
-      - "É mantido em tabela própria e possui um benefício de cada parceiro publicado."
+      - 'É mantido em tabela própria e possui um benefício de cada parceiro publicado.'
 
 business-rules:
   - id: BR-01
-    description: "Somente o administrador autenticado pode criar, editar ou alterar o estado de parceiros."
+    description: 'Somente o administrador autenticado pode criar, editar ou alterar o estado de parceiros.'
   - id: BR-02
-    description: "Somente parceiros no estado published aparecem no catálogo e em páginas públicas de detalhes."
+    description: 'Somente parceiros no estado published aparecem no catálogo e em páginas públicas de detalhes.'
   - id: BR-03
-    description: "Um parceiro pode ser salvo como draft sem aparecer publicamente."
+    description: 'Um parceiro pode ser salvo como draft sem aparecer publicamente.'
   - id: BR-04
-    description: "Um parceiro inactive deixa de ser público, mas permanece disponível para edição e republicação no CMS."
+    description: 'Um parceiro inactive deixa de ser público, mas permanece disponível para edição e republicação no CMS.'
   - id: BR-05
-    description: "A publicação exige nome, descrição, identificador público, categoria e um percentual de desconto para cada plano disponível; site, contatos, unidades, cupons e instruções adicionais são opcionais."
+    description: 'A publicação exige nome, descrição, identificador público, categoria e um percentual de desconto para cada plano disponível; site, contatos, unidades, cupons e instruções adicionais são opcionais.'
   - id: BR-06
-    description: "O salvamento preserva os dados completos do parceiro, incluindo categoria, contatos, unidades, benefícios por plano e cupons."
+    description: 'O salvamento preserva os dados completos do parceiro, incluindo categoria, contatos, unidades, benefícios por plano e cupons.'
 
 use-cases:
   - id: UC-01
     actor: ACT-01
-    goal: "Autenticar-se para acessar o CMS."
-    preconditions: ["Possuir a única credencial administrativa válida."]
-    main-flow: ["O administrador informa suas credenciais.", "O sistema valida a credencial e libera o painel."]
-    outcome: "Administrador autenticado no CMS."
+    goal: 'Autenticar-se para acessar o CMS.'
+    preconditions: ['Possuir a única credencial administrativa válida.']
+    main-flow:
+      [
+        'O administrador informa suas credenciais.',
+        'O sistema valida a credencial e libera o painel.',
+      ]
+    outcome: 'Administrador autenticado no CMS.'
   - id: UC-02
     actor: ACT-01
-    goal: "Cadastrar ou editar um parceiro."
-    preconditions: ["Estar autenticado no CMS."]
-    main-flow: ["O administrador preenche ou altera os dados.", "O sistema salva todos os dados informados."]
-    outcome: "Parceiro criado ou atualizado, preservando seu estado."
+    goal: 'Cadastrar ou editar um parceiro.'
+    preconditions: ['Estar autenticado no CMS.']
+    main-flow:
+      ['O administrador preenche ou altera os dados.', 'O sistema salva todos os dados informados.']
+    outcome: 'Parceiro criado ou atualizado, preservando seu estado.'
   - id: UC-03
     actor: ACT-01
-    goal: "Publicar, desativar ou republicar um parceiro."
-    preconditions: ["Estar autenticado no CMS.", "O parceiro existir."]
-    main-flow: ["O administrador escolhe a alteração de estado.", "O sistema valida e atualiza o estado."]
-    outcome: "Visibilidade pública do parceiro atualizada conforme seu estado."
+    goal: 'Publicar, desativar ou republicar um parceiro.'
+    preconditions: ['Estar autenticado no CMS.', 'O parceiro existir.']
+    main-flow:
+      ['O administrador escolhe a alteração de estado.', 'O sistema valida e atualiza o estado.']
+    outcome: 'Visibilidade pública do parceiro atualizada conforme seu estado.'
   - id: UC-04
     actor: ACT-02
-    goal: "Consultar catálogo e detalhes públicos."
-    preconditions: ["Nenhuma."]
-    main-flow: ["O visitante acessa o catálogo ou uma URL de parceiro.", "O sistema mostra somente parceiros publicados."]
-    outcome: "Visitante visualiza a listagem ou o detalhe de um parceiro disponível."
+    goal: 'Consultar catálogo e detalhes públicos.'
+    preconditions: ['Nenhuma.']
+    main-flow:
+      [
+        'O visitante acessa o catálogo ou uma URL de parceiro.',
+        'O sistema mostra somente parceiros publicados.',
+      ]
+    outcome: 'Visitante visualiza a listagem ou o detalhe de um parceiro disponível.'
 ---
 
 # Domínio — CMS de parceiros Clube Flex
@@ -193,4 +203,3 @@ use-cases:
 - `published` → `inactive`, quando o administrador o desativa.
 - `inactive` → `published`, após republicação e validação.
 - Parceiros em qualquer estado permanecem editáveis pelo administrador.
-
