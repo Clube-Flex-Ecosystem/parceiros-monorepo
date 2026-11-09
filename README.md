@@ -26,3 +26,13 @@ Cada parceiro publicado pode apresentar sua categoria, descrição, endereço op
 ## Documentação do produto
 
 As decisões e regras consolidadas do produto estão em [docs](./docs/README.md).
+
+## Ambiente local
+
+O banco local da API é iniciado com:
+
+```sh
+docker compose up -d
+```
+
+O arquivo `apps/api/.env.example` contém a URL de conexão correspondente.

@@ -295,9 +295,9 @@ endpoints:
 
 `GET /auth/me` retorna `User` da sessão atual. Nunca expõe dados de credencial. Sem sessão válida, retorna `401`.
 
-### ConfiguraÃ§Ã£o da sessÃ£o
+### Configuração da sessão
 
-A sessÃ£o administrativa Ã© mantida por cookie HTTP. O cookie Ã© `HttpOnly`, usa polÃ­tica `SameSite=Lax`, aceita domÃ­nio configurÃ¡vel e expira apÃ³s o perÃ­odo definido para a aplicaÃ§Ã£o, com sete dias como padrÃ£o.
+A sessão administrativa é mantida por cookie HTTP. O cookie é `HttpOnly`, usa política `SameSite=Lax` e expira após o período definido para a aplicação, com sete dias como padrão.
 
 ### Parceiros administrativos
 

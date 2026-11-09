@@ -6,6 +6,11 @@ Esta aplicação concentra as regras de negócio, autenticação, persistência 
 
 ```text
 .env.example
+prisma.config.ts
+prisma/
+├── migrations/
+│   └── 20261109000000_init/
+└── schema.prisma
 src/
 ├── bootstrap.ts
 ├── config/
@@ -58,6 +63,8 @@ src/
 ├── repositories/
 ├── database/
 │   └── prisma/
+│       ├── client.ts
+│       └── generated/
 └── providers/
 ```
 
@@ -66,9 +73,12 @@ src/
 | Caminho                     | Responsabilidade                                                                                                                              |
 | --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
 | `.env.example`              | Lista as variáveis de ambiente que podem configurar a API.                                                                                    |
+| `prisma.config.ts`          | Configura o schema e a conexão usada pelas ferramentas de persistência.                                                                       |
+| `prisma/schema.prisma`      | Declara a fonte de dados PostgreSQL, os modelos persistidos e a geração do cliente de acesso aos dados.                                       |
+| `prisma/migrations/`        | Mantém o histórico versionado das mudanças no banco de dados.                                                                                 |
 | `src/bootstrap.ts`          | Inicializa a aplicação.                                                                                                                       |
-| `src/config/env.ts`         | Valida `PORT`, `NODE_ENV`, `COOKIE_DOMAIN` e `COOKIE_EXPIRES_DAYS`.                                                                           |
-| `src/config/cookie.ts`      | Centraliza leitura, criação e remoção de cookies HTTP com `HttpOnly`, `SameSite=Lax`, domínio configurável e expiração padrão de sete dias.   |
+| `src/config/env.ts`         | Valida `DATABASE_URL`, `PORT`, `NODE_ENV` e as configurações de cookie, incluindo `COOKIE_NAME` com padrão `flex.session`.                    |
+| `src/config/cookie.ts`      | Centraliza leitura, criação e remoção de cookies HTTP com `HttpOnly`, `SameSite=Lax` e expiração padrão de sete dias.                         |
 | `src/http/app.ts`           | Configura o Express, CORS com credenciais, leitura de cookies, Swagger e os middlewares globais.                                              |
 | `src/controllers/`          | Agrupa e valida as entradas HTTP por módulo funcional; enquanto não estão integrados aos casos de uso, devolvem respostas provisórias.        |
 | `src/http/docs/`            | Mantém o registry OpenAPI e a geração da documentação Swagger.                                                                                |
@@ -81,6 +91,7 @@ src/
 | `src/helpers/`              | Reúne funções auxiliares, como formatação de respostas e validação de entradas.                                                               |
 | `src/schemas/`              | Define schemas reutilizáveis, separados por módulo, para as entradas HTTP.                                                                    |
 | `src/usecases/`             | Implementa os fluxos de autenticação, categorias e planos, organizados por módulo e com um arquivo por caso de uso; parceiros fica reservado. |
+| `src/database/prisma/`      | Mantém o singleton do cliente de acesso ao PostgreSQL e o código gerado a partir do schema.                                                   |
 | `src/providers/`            | Reserva o espaço para integrações e provedores compartilhados.                                                                                |
 
 ## Referências
