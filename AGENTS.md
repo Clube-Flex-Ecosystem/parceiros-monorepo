@@ -4,6 +4,7 @@
 
 - Antes de tomar qualquer decisão de produto, domínio, API, dados, arquitetura ou comportamento, leia todos os documentos relevantes do repositório: `docs/`, todo `README.md` aplicável e todo `AGENTS.md` aplicável ao caminho da alteração.
 - Trate `docs/` como a versão final e canônica da documentação de produto. Trate READMEs e `AGENTS.md` como documentação canônica de estrutura, uso, desenvolvimento e instruções do monorepo.
+- Mantenha `docs/` totalmente agnóstico de tecnologia. Não mencione bibliotecas, frameworks, provedores, ferramentas, detalhes de infraestrutura ou configuração de implementação; esses detalhes pertencem aos READMEs técnicos das aplicações.
 - Toda mudança deve manter o projeto inteiro sincronizado. Antes de concluir, revise e atualize todos os documentos impactados, incluindo arquivos em `docs/`, READMEs, `AGENTS.md`, mapas de estrutura, instruções de execução, scripts e exemplos.
 - A criação, remoção, renomeação ou movimentação de qualquer pasta, aplicação, pacote, arquivo de configuração, script, rota, entidade ou contrato exige a atualização imediata de toda documentação e instrução afetada.
 - Não conclua uma tarefa enquanto existir divergência entre a implementação, a estrutura de diretórios, os scripts, os READMEs, `AGENTS.md` e a documentação em `docs/`.
@@ -28,6 +29,8 @@
 - Mantenha o repositório formatado com Prettier. Execute a verificação de formatação após mudanças e aplique a formatação quando necessário.
 - Preserve finais de linha LF, conforme `.gitattributes` e `.editorconfig`.
 - Mantenha as configurações globais de ESLint e Prettier na raiz do monorepo; não crie configurações conflitantes nas aplicações sem necessidade explícita.
+- Nomeie arquivos e diretórios novos em `kebab-case`.
+- Prefira arrow functions para funções novas. Use classes apenas quando forem necessárias ao modelo de domínio, como em erros customizados.
 - Não adicione dependências, scripts, rotas, campos, entidades ou comportamentos que não estejam documentados ou aprovados.
 
 ## Dados e segurança

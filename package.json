@@ -10,7 +10,7 @@
     "build": "turbo run build",
     "check": "pnpm run format && pnpm run lint && pnpm run typecheck",
     "dev": "turbo run dev",
-    "lint": "turbo run lint",
+    "lint": "eslint .",
     "typecheck": "turbo run typecheck",
     "format": "prettier --check .",
     "format:write": "prettier --write ."

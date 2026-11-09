@@ -1,10 +1,11 @@
 # API — Parceiros Clube Flex
 
-Esta aplicação concentra as regras de negócio, autenticação, persistência e interfaces HTTP do CMS de parceiros.
+Esta aplicação concentra as regras de negócio, autenticação, persistência e interfaces HTTP do CMS de parceiros. A interface HTTP usa Express com TypeScript, CORS, documentação Swagger e tratamento padrão para rotas inexistentes e erros inesperados.
 
 ## Estrutura
 
 ```text
+.env.example
 src/
 ├── bootstrap.ts
 ├── http/
@@ -14,31 +15,40 @@ src/
 │   ├── middlewares/
 │   └── routes/
 ├── domains/
+│   ├── errors/
 │   ├── models/
 │   └── repositories/
+├── helpers/
 ├── usecases/
 ├── repositories/
 ├── database/
 │   └── prisma/
-└── providers/
+├── providers/
+│   └── env/
+└── validations/
 ```
 
 ## Responsabilidade de cada área
 
-| Caminho                     | Responsabilidade                                                           |
-| --------------------------- | -------------------------------------------------------------------------- |
-| `src/bootstrap.ts`          | Inicializa a aplicação.                                                    |
-| `src/http/app.ts`           | Configura a aplicação HTTP.                                                |
-| `src/http/controllers/`     | Converte requisições HTTP em chamadas de casos de uso e devolve respostas. |
-| `src/http/docs/`            | Mantém artefatos de documentação da interface HTTP.                        |
-| `src/http/middlewares/`     | Contém validações e controles executados antes dos controladores.          |
-| `src/http/routes/`          | Declara as rotas HTTP da aplicação.                                        |
-| `src/domains/models/`       | Define os conceitos centrais do domínio.                                   |
-| `src/domains/repositories/` | Define os contratos de acesso aos dados do domínio.                        |
-| `src/usecases/`             | Implementa os fluxos e regras de negócio.                                  |
-| `src/repositories/`         | Implementa o acesso aos dados definido pelos contratos de domínio.         |
-| `src/database/prisma/`      | Mantém os artefatos de persistência do Prisma.                             |
-| `src/providers/`            | Integra serviços e recursos externos à aplicação.                          |
+| Caminho                     | Responsabilidade                                                            |
+| --------------------------- | --------------------------------------------------------------------------- |
+| `.env.example`              | Lista as variáveis de ambiente que podem configurar a API.                  |
+| `src/bootstrap.ts`          | Inicializa a aplicação.                                                     |
+| `src/http/app.ts`           | Configura o Express, CORS, Swagger e os middlewares globais.                |
+| `src/http/controllers/`     | Converte requisições HTTP em chamadas de casos de uso e devolve respostas.  |
+| `src/http/docs/`            | Mantém o registry OpenAPI e a geração da documentação Swagger.              |
+| `src/http/middlewares/`     | Contém validações, resposta de rota inexistente, erros e logs estruturados. |
+| `src/http/routes/`          | Declara as rotas HTTP da aplicação.                                         |
+| `src/domains/errors/`       | Define erros de domínio, como `AppError`, com códigos HTTP padronizados.    |
+| `src/domains/models/`       | Define os conceitos centrais do domínio.                                    |
+| `src/domains/repositories/` | Define os contratos de acesso aos dados do domínio.                         |
+| `src/helpers/`              | Reúne funções auxiliares, como a formatação de respostas no padrão da API.  |
+| `src/usecases/`             | Implementa os fluxos e regras de negócio.                                   |
+| `src/repositories/`         | Implementa o acesso aos dados definido pelos contratos de domínio.          |
+| `src/database/prisma/`      | Mantém os artefatos de persistência do Prisma.                              |
+| `src/providers/`            | Integra serviços e recursos externos à aplicação.                           |
+| `src/providers/env/`        | Valida `PORT` e `NODE_ENV` com T3 Env.                                      |
+| `src/validations/`          | Centraliza validações compartilhadas pela aplicação.                        |
 
 ## Referências
 

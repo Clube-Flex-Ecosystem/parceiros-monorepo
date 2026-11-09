@@ -6,7 +6,7 @@ Esta pasta contém as especificações consolidadas da entrega final do CMS de p
 
 - [Visão geral](specs/overview.md): contexto do produto, atores, fluxo principal, capacidades e critério de validação.
 - [Domínio](specs/domain.md): entidades, relacionamentos, regras de negócio, casos de uso e estados do parceiro.
-- [API](specs/api.md): convenções HTTP, autenticação por sessão, rotas administrativas e públicas, além dos contratos de dados.
+- [API](specs/api.md): autenticação por sessão, rotas administrativas e públicas, além dos contratos de dados.
 
 ## Leitura recomendada
 

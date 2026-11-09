@@ -5,7 +5,7 @@ description: 'Contratos para sessão administrativa, gestão de parceiros e cons
 
 api:
   base-path: '/'
-  authentication: 'Sessão stateful no servidor, iniciada pela única conta criada por seed e identificada por cookie HttpOnly.'
+  authentication: 'Sessão da única conta administrativa.'
   error-format: '{ code: string, message: string }'
 
 endpoints:
@@ -13,14 +13,14 @@ endpoints:
     use-case: UC-01
     method: 'POST'
     path: '/auth/login'
-    authorization: 'Público; valida a única credencial administrativa.'
+    authorization: 'Público; valida a credencial administrativa.'
     request:
       params: []
       query: []
-      body: ['Credencial da conta administrativa criada por seed.']
+      body: ['Credencial administrativa.']
     response:
       status: '200'
-      body: ['{ data: AdminUser }; o servidor envia cookie HttpOnly.']
+      body: ['{ data: AdminUser }; sessão autenticada.']
     errors: ['401: credencial inválida.']
   - id: API-02
     use-case: UC-01
@@ -164,7 +164,7 @@ endpoints:
 ## Convenções
 
 - **Prefixo:** não há prefixo global de API.
-- **Autenticação:** a conta administrativa é criada por seed. Após o login, o servidor mantém uma sessão stateful identificada por cookie `HttpOnly`. Rotas em `/admin` exigem essa sessão.
+- **Autenticação:** as rotas em `/admin` exigem uma sessão administrativa válida.
 - **Sucesso com item:** `{ "data": { ... } }`.
 - **Sucesso com lista:** `{ "data": [ ... ], "meta": { "total": 0 } }`.
 - **Formato de erros:** `{ "code": "CODIGO_DO_ERRO", "message": "Descrição legível do erro" }`.
@@ -187,9 +187,9 @@ endpoints:
 
 ### Sessão administrativa
 
-`POST /auth/login` recebe a credencial da única conta criada por seed. Em caso de sucesso, retorna `AdminUser` e envia o cookie `HttpOnly` da sessão.
+`POST /auth/login` recebe a credencial administrativa. Em caso de sucesso, retorna `AdminUser` e inicia uma sessão administrativa.
 
-`GET /auth/me` retorna `AdminUser` da sessão atual. Nunca expõe senha, hash, cookie ou outro dado de credencial. Sem sessão válida, retorna `401`.
+`GET /auth/me` retorna `AdminUser` da sessão atual. Nunca expõe dados de credencial. Sem sessão válida, retorna `401`.
 
 ### Parceiros administrativos
 
