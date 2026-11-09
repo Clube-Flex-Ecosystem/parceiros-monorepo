@@ -40,6 +40,21 @@ src/
 │   ├── partner/
 │   └── plan/
 ├── usecases/
+│   ├── auth/
+│   │   ├── get-current-user.ts
+│   │   ├── login.ts
+│   │   └── logout.ts
+│   ├── category/
+│   │   ├── create-category.ts
+│   │   ├── delete-category.ts
+│   │   ├── list-categories.ts
+│   │   └── update-category.ts
+│   ├── partner/
+│   └── plan/
+│       ├── create-plan.ts
+│       ├── delete-plan.ts
+│       ├── list-plans.ts
+│       └── update-plan.ts
 ├── repositories/
 ├── database/
 │   └── prisma/
@@ -48,24 +63,25 @@ src/
 
 ## Responsabilidade de cada área
 
-| Caminho                     | Responsabilidade                                                                                                                            |
-| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| `.env.example`              | Lista as variáveis de ambiente que podem configurar a API.                                                                                  |
-| `src/bootstrap.ts`          | Inicializa a aplicação.                                                                                                                     |
-| `src/config/env.ts`         | Valida `PORT`, `NODE_ENV`, `COOKIE_DOMAIN` e `COOKIE_EXPIRES_DAYS`.                                                                         |
-| `src/config/cookie.ts`      | Centraliza leitura, criação e remoção de cookies HTTP com `HttpOnly`, `SameSite=Lax`, domínio configurável e expiração padrão de sete dias. |
-| `src/http/app.ts`           | Configura o Express, CORS com credenciais, leitura de cookies, Swagger e os middlewares globais.                                            |
-| `src/controllers/`          | Agrupa as entradas HTTP por módulo funcional; enquanto os casos de uso não existem, devolve `{ ok: true }`.                                 |
-| `src/http/docs/`            | Mantém o registry OpenAPI e a geração da documentação Swagger.                                                                              |
-| `src/http/middlewares/`     | Contém resposta de rota inexistente e tratamento de erros.                                                                                  |
-| `src/routes/`               | Declara as rotas HTTP por módulo e concentra seus prefixos no arquivo `index.ts`.                                                           |
-| `src/domains/errors/`       | Define erros de domínio, como `AppError`, com códigos HTTP padronizados.                                                                    |
-| `src/domains/models/`       | Define os modelos User, Partner, Category, Contact, PartnerPlanDiscount e Plan.                                                             |
-| `src/domains/providers/`    | Define as abstrações de hash de credenciais e assinatura e validação de tokens JWT usadas pelos casos de uso.                               |
-| `src/domains/repositories/` | Define os contratos de acesso para User, Partner e suas entidades associadas.                                                               |
-| `src/helpers/`              | Reúne funções auxiliares, como formatação de respostas e validação de entradas.                                                             |
-| `src/schemas/`              | Define schemas reutilizáveis, separados por módulo, para as entradas HTTP.                                                                  |
-| `src/providers/`            | Reserva o espaço para integrações e provedores compartilhados.                                                                              |
+| Caminho                     | Responsabilidade                                                                                                                              |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `.env.example`              | Lista as variáveis de ambiente que podem configurar a API.                                                                                    |
+| `src/bootstrap.ts`          | Inicializa a aplicação.                                                                                                                       |
+| `src/config/env.ts`         | Valida `PORT`, `NODE_ENV`, `COOKIE_DOMAIN` e `COOKIE_EXPIRES_DAYS`.                                                                           |
+| `src/config/cookie.ts`      | Centraliza leitura, criação e remoção de cookies HTTP com `HttpOnly`, `SameSite=Lax`, domínio configurável e expiração padrão de sete dias.   |
+| `src/http/app.ts`           | Configura o Express, CORS com credenciais, leitura de cookies, Swagger e os middlewares globais.                                              |
+| `src/controllers/`          | Agrupa e valida as entradas HTTP por módulo funcional; enquanto não estão integrados aos casos de uso, devolvem respostas provisórias.        |
+| `src/http/docs/`            | Mantém o registry OpenAPI e a geração da documentação Swagger.                                                                                |
+| `src/http/middlewares/`     | Contém resposta de rota inexistente e tratamento de erros.                                                                                    |
+| `src/routes/`               | Declara as rotas HTTP por módulo e concentra seus prefixos no arquivo `index.ts`.                                                             |
+| `src/domains/errors/`       | Define erros de domínio, como `AppError`, com códigos HTTP padronizados.                                                                      |
+| `src/domains/models/`       | Define os modelos User, Partner, Category, Contact, PartnerPlanDiscount e Plan.                                                               |
+| `src/domains/providers/`    | Define as abstrações de hash de credenciais e assinatura e validação de tokens JWT usadas pelos casos de uso.                                 |
+| `src/domains/repositories/` | Define os contratos de acesso para User, Partner e suas entidades associadas.                                                                 |
+| `src/helpers/`              | Reúne funções auxiliares, como formatação de respostas e validação de entradas.                                                               |
+| `src/schemas/`              | Define schemas reutilizáveis, separados por módulo, para as entradas HTTP.                                                                    |
+| `src/usecases/`             | Implementa os fluxos de autenticação, categorias e planos, organizados por módulo e com um arquivo por caso de uso; parceiros fica reservado. |
+| `src/providers/`            | Reserva o espaço para integrações e provedores compartilhados.                                                                                |
 
 ## Referências
 

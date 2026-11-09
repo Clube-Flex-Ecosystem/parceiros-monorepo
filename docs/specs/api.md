@@ -156,7 +156,12 @@ endpoints:
     response:
       status: '201'
       body: ['{ data: Category }.']
-    errors: ['401: não autenticado.', '422: dados inválidos.']
+    errors:
+      [
+        '401: não autenticado.',
+        '409: já existe uma categoria com o mesmo nome.',
+        '422: dados inválidos.',
+      ]
   - id: API-12
     use-case: UC-05
     method: 'PATCH'
@@ -213,7 +218,12 @@ endpoints:
     response:
       status: '201'
       body: ['{ data: Plan }.']
-    errors: ['401: não autenticado.', '422: dados inválidos.']
+    errors:
+      [
+        '401: não autenticado.',
+        '409: já existe um plano com o mesmo nome.',
+        '422: dados inválidos.',
+      ]
   - id: API-16
     use-case: UC-06
     method: 'PATCH'
@@ -307,9 +317,9 @@ As rotas em `/partners` não exigem sessão e só retornam parceiros `published`
 
 ### Categorias do CMS
 
-`GET /admin/categories` lista as categorias disponíveis para o formulário administrativo. `POST /admin/categories` cria uma categoria e `PATCH /admin/categories/{id}` atualiza seu nome. `DELETE /admin/categories/{id}` só remove categorias sem parceiros associados e retorna `409` caso contrário.
+`GET /admin/categories` lista as categorias disponíveis para o formulário administrativo. `POST /admin/categories` cria uma categoria quando não existe outra com o mesmo nome e retorna `409` em caso de duplicidade. `PATCH /admin/categories/{id}` atualiza seu nome. `DELETE /admin/categories/{id}` só remove categorias sem parceiros associados e retorna `409` caso contrário.
 
-`GET /admin/plans` lista os planos persistidos que o formulário administrativo usa para preencher os descontos percentuais. `POST /admin/plans` cria um plano e `PATCH /admin/plans/{id}` atualiza seu nome. `DELETE /admin/plans/{id}` só remove planos sem descontos de parceiros associados e retorna `409` caso contrário.
+`GET /admin/plans` lista os planos persistidos que o formulário administrativo usa para preencher os descontos percentuais. `POST /admin/plans` cria um plano quando não existe outro com o mesmo nome e retorna `409` em caso de duplicidade. `PATCH /admin/plans/{id}` atualiza seu nome. `DELETE /admin/plans/{id}` só remove planos sem descontos de parceiros associados e retorna `409` caso contrário.
 
 ## Estruturas compartilhadas
 

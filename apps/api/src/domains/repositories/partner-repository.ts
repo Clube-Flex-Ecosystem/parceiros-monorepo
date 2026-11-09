@@ -3,6 +3,7 @@ import type { CreateData, UpdateData } from './repository.js';
 
 export type PartnerFilter = {
   status?: PartnerStatus;
+  categoryId?: string;
 };
 
 export interface PartnerRepository {

@@ -71,6 +71,8 @@ business-rules:
     description: 'O administrador pode cadastrar, editar e remover categorias que não estejam associadas a parceiros.'
   - id: BR-10
     description: 'O administrador pode cadastrar, editar e remover planos que não estejam associados a descontos de parceiros.'
+  - id: BR-11
+    description: 'O sistema não permite criar uma categoria ou um plano com nome já utilizado por outro registro do mesmo tipo.'
 
 use-cases:
   - id: UC-01
@@ -179,6 +181,7 @@ use-cases:
 - **BR-08:** Categorias e planos são dados de referência persistidos em tabelas próprias. Cada desconto por plano referencia exatamente um parceiro e um plano, sem duplicidade nessa combinação.
 - **BR-09:** O administrador pode cadastrar, editar e remover categorias que não estejam associadas a parceiros.
 - **BR-10:** O administrador pode cadastrar, editar e remover planos que não estejam associados a descontos de parceiros.
+- **BR-11:** O sistema não permite criar uma categoria ou um plano com nome já utilizado por outro registro do mesmo tipo.
 
 ## Casos de uso
 
@@ -220,7 +223,7 @@ use-cases:
 - **Objetivo:** manter as categorias disponíveis para classificar parceiros.
 - **Pré-condições:** estar autenticado no CMS.
 - **Resultado:** categorias são criadas, editadas ou removidas quando não estão associadas a parceiros.
-- **Regras relacionadas:** BR-01, BR-09
+- **Regras relacionadas:** BR-01, BR-09, BR-11
 
 ### UC-06 — Gerenciar planos
 
@@ -228,7 +231,7 @@ use-cases:
 - **Objetivo:** manter os planos usados para definir descontos de parceiros.
 - **Pré-condições:** estar autenticado no CMS.
 - **Resultado:** planos são criados, editados ou removidos quando não estão associados a descontos de parceiros.
-- **Regras relacionadas:** BR-01, BR-10
+- **Regras relacionadas:** BR-01, BR-10, BR-11
 
 ## Estados e transições
 

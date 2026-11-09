@@ -5,13 +5,14 @@ import { deleteCategorySchema } from '../schemas/category/delete-category-schema
 import { listCategoriesSchema } from '../schemas/category/list-categories-schema.js';
 import { updateCategorySchema } from '../schemas/category/update-category-schema.js';
 import { validateSchema } from '../helpers/validate-schema.js';
+import { StatusCodes } from 'http-status-codes/build/cjs/status-codes.js';
 
 const listCategories: RequestHandler = (request, response) => {
   const parsed = validateSchema(request.query, listCategoriesSchema);
 
   void parsed;
 
-  return response.status(200).json({ ok: true });
+  return response.status(StatusCodes.OK).json({ ok: true });
 };
 
 const createCategory: RequestHandler = (request, response) => {
@@ -19,7 +20,7 @@ const createCategory: RequestHandler = (request, response) => {
 
   void parsed;
 
-  return response.status(201).json({ ok: true });
+  return response.status(StatusCodes.CREATED).json({ ok: true });
 };
 
 const updateCategory: RequestHandler = (request, response) => {
@@ -30,7 +31,7 @@ const updateCategory: RequestHandler = (request, response) => {
 
   void parsed;
 
-  return response.status(200).json({ ok: true });
+  return response.status(StatusCodes.OK).json({ ok: true });
 };
 
 const deleteCategory: RequestHandler = (request, response) => {
@@ -38,7 +39,7 @@ const deleteCategory: RequestHandler = (request, response) => {
 
   void parsed;
 
-  return response.status(204).send();
+  return response.status(StatusCodes.NO_CONTENT).send();
 };
 
 export const categoryController = {
