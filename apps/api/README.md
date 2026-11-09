@@ -73,6 +73,9 @@ src/
 │       ├── client.ts
 │       └── generated/
 └── providers/
+    ├── bcrypt-hash-provider.ts
+    ├── jsonwebtoken-jwt-provider.ts
+    └── resend-mail-provider.ts
 ```
 
 ## Responsabilidade de cada área
@@ -84,7 +87,7 @@ src/
 | `prisma/schema.prisma`      | Declara a fonte de dados PostgreSQL, os modelos persistidos e a geração do cliente de acesso aos dados.                                       |
 | `prisma/migrations/`        | Mantém o histórico versionado das mudanças no banco de dados.                                                                                 |
 | `src/bootstrap.ts`          | Inicializa a aplicação.                                                                                                                       |
-| `src/config/env.ts`         | Valida `DATABASE_URL`, `PORT`, `NODE_ENV` e as configurações de cookie, incluindo `COOKIE_NAME` com padrão `flex.session`.                    |
+| `src/config/env.ts`         | Valida conexão de dados, credenciais JWT e Resend, além das configurações de execução e cookies.                                              |
 | `src/config/cookie.ts`      | Centraliza leitura, criação e remoção de cookies HTTP com `HttpOnly`, `SameSite=Lax` e expiração padrão de sete dias.                         |
 | `src/http/app.ts`           | Configura o Express, CORS com credenciais, leitura de cookies, Swagger e os middlewares globais.                                              |
 | `src/controllers/`          | Agrupa e valida as entradas HTTP por módulo funcional; enquanto não estão integrados aos casos de uso, devolvem respostas provisórias.        |
@@ -100,7 +103,7 @@ src/
 | `src/schemas/`              | Define schemas reutilizáveis, separados por módulo, para as entradas HTTP.                                                                    |
 | `src/usecases/`             | Implementa os fluxos de autenticação, categorias e planos, organizados por módulo e com um arquivo por caso de uso; parceiros fica reservado. |
 | `src/database/prisma/`      | Mantém o singleton do cliente de acesso ao PostgreSQL e o código gerado a partir do schema.                                                   |
-| `src/providers/`            | Reserva o espaço para integrações e provedores compartilhados.                                                                                |
+| `src/providers/`            | Implementa hash de credenciais, tokens JWT e envio de e-mails com os serviços configurados pela aplicação.                                    |
 
 ## Referências
 
