@@ -12,6 +12,7 @@ prisma/
 │   └── 20261109000000_init/
 ├── schema.prisma
 └── seed.ts
+vitest.config.ts
 src/
 ├── @types/
 │   └── express.d.ts
@@ -92,6 +93,7 @@ src/
 | --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `.env.example`              | Lista as variáveis de ambiente que podem configurar a API.                                                                                                        |
 | `prisma.config.ts`          | Configura o schema, a conexão e o seed usados pelas ferramentas de persistência.                                                                                  |
+| `vitest.config.ts`          | Configura o Vitest com reinicialização dos mocks entre os testes.                                                                                                 |
 | `prisma/schema.prisma`      | Declara a fonte de dados PostgreSQL, os modelos persistidos e a geração do cliente de acesso aos dados.                                                           |
 | `prisma/seed.ts`            | Cria ou atualiza o administrador inicial, usando a senha definida em `ADMIN_PASSWORD`; executado por `pnpm prisma:seed`.                                          |
 | `prisma/migrations/`        | Mantém o histórico versionado das mudanças no banco de dados.                                                                                                     |

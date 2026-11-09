@@ -8,9 +8,10 @@
   },
   "scripts": {
     "build": "turbo run build",
-    "check": "pnpm run format && pnpm run lint && pnpm run typecheck",
+    "check": "pnpm run format && pnpm run lint && pnpm run typecheck && pnpm run test",
     "dev": "turbo run dev",
     "lint": "eslint .",
+    "test": "turbo run test",
     "typecheck": "turbo run typecheck",
     "format": "prettier --check .",
     "format:write": "prettier --write ."
