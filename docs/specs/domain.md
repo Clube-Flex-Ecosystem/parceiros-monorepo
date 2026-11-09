@@ -77,14 +77,15 @@ business-rules:
 use-cases:
   - id: UC-01
     actor: ACT-01
-    goal: 'Autenticar-se para acessar o CMS.'
+    goal: 'Iniciar ou encerrar a sessão para acessar o CMS.'
     preconditions: ['Possuir a única credencial administrativa válida.']
     main-flow:
       [
-        'O administrador informa suas credenciais.',
+        'O administrador informa suas credenciais para iniciar a sessão.',
         'O sistema valida a credencial e libera o painel.',
+        'O administrador pode encerrar a sessão quando terminar o acesso.',
       ]
-    outcome: 'Administrador autenticado no CMS.'
+    outcome: 'Administrador autenticado no CMS ou sessão administrativa encerrada.'
   - id: UC-02
     actor: ACT-01
     goal: 'Cadastrar ou editar um parceiro.'
@@ -185,12 +186,12 @@ use-cases:
 
 ## Casos de uso
 
-### UC-01 — Autenticar administrador
+### UC-01 — Gerenciar sessão administrativa
 
 - **Ator:** ACT-01
-- **Objetivo:** acessar o CMS.
+- **Objetivo:** iniciar ou encerrar a sessão administrativa para acessar o CMS.
 - **Pré-condições:** possuir a credencial administrativa válida.
-- **Resultado:** administrador autenticado no CMS.
+- **Resultado:** administrador autenticado no CMS ou sessão administrativa encerrada.
 - **Regras relacionadas:** BR-01
 
 ### UC-02 — Cadastrar ou editar parceiro

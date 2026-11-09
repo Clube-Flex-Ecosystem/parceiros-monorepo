@@ -19,8 +19,8 @@ endpoints:
       query: []
       body: ['Credencial administrativa.']
     response:
-      status: '200'
-      body: ['{ data: User }; sessão autenticada.']
+      status: '204'
+      body: []
     errors: ['401: credencial inválida.']
   - id: API-02
     use-case: UC-01
@@ -255,6 +255,19 @@ endpoints:
         '404: plano não encontrado.',
         '409: plano associado a descontos de parceiros.',
       ]
+  - id: API-18
+    use-case: UC-01
+    method: 'POST'
+    path: '/auth/logout'
+    authorization: 'Público; encerra a sessão local quando presente.'
+    request:
+      params: []
+      query: []
+      body: []
+    response:
+      status: '204'
+      body: []
+    errors: []
 ---
 
 # API — CMS de parceiros Clube Flex
@@ -288,12 +301,15 @@ endpoints:
 | API-15 | `POST`   | `/admin/plans`                | Cria um plano.                                  |
 | API-16 | `PATCH`  | `/admin/plans/{id}`           | Atualiza um plano.                              |
 | API-17 | `DELETE` | `/admin/plans/{id}`           | Remove um plano sem descontos associados.       |
+| API-18 | `POST`   | `/auth/logout`                | Encerra a sessão administrativa.                |
 
 ### Sessão administrativa
 
-`POST /auth/login` recebe a credencial administrativa. Em caso de sucesso, retorna `User` e inicia uma sessão administrativa.
+`POST /auth/login` recebe a credencial administrativa. Em caso de sucesso, inicia uma sessão administrativa e retorna `204`.
 
 `GET /auth/me` retorna `User` da sessão atual. Nunca expõe dados de credencial. Sem sessão válida, retorna `401`.
+
+`POST /auth/logout` encerra a sessão administrativa atual e retorna `204`.
 
 ### Configuração da sessão
 

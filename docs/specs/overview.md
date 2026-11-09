@@ -20,7 +20,7 @@ delivery:
     - 'Visitantes encontram parceiros publicados no catálogo e acessam seus detalhes.'
   capabilities:
     - id: RF-01
-      description: 'Autenticar a única conta administrativa para acesso ao painel.'
+      description: 'Iniciar e encerrar a sessão da única conta administrativa para acesso ao painel.'
     - id: RF-02
       description: 'Cadastrar, listar e editar parceiros com seus dados completos, incluindo endereço opcional e descontos percentuais por plano.'
     - id: RF-03
@@ -61,7 +61,7 @@ O CMS de parceiros Clube Flex permite que uma única pessoa administradora mante
 
 ## Capacidades do produto
 
-- **RF-01:** Autenticar a única conta administrativa para acesso ao painel.
+- **RF-01:** Iniciar e encerrar a sessão da única conta administrativa para acesso ao painel.
 - **RF-02:** Cadastrar, listar e editar parceiros, com categoria obrigatória, endereço e contatos opcionais, além de descontos percentuais por plano.
 - **RF-03:** Salvar como rascunho, publicar, desativar e republicar parceiros.
 - **RF-04:** Exibir somente parceiros publicados em um catálogo público responsivo.

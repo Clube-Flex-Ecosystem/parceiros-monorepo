@@ -12,6 +12,8 @@ prisma/
 │   └── 20261109000000_init/
 └── schema.prisma
 src/
+├── @types/
+│   └── express.d.ts
 ├── bootstrap.ts
 ├── config/
 │   ├── cookie.ts
@@ -27,6 +29,7 @@ src/
 │   │   ├── document.ts
 │   │   └── openapi.ts
 │   └── middlewares/
+│       └── authenticated.ts
 ├── routes/
 │   ├── auth-routes.ts
 │   ├── category-routes.ts
@@ -87,12 +90,13 @@ src/
 | `prisma/schema.prisma`      | Declara a fonte de dados PostgreSQL, os modelos persistidos e a geração do cliente de acesso aos dados.                                       |
 | `prisma/migrations/`        | Mantém o histórico versionado das mudanças no banco de dados.                                                                                 |
 | `src/bootstrap.ts`          | Inicializa a aplicação.                                                                                                                       |
+| `src/@types/`               | Estende os tipos de bibliotecas usadas pela aplicação.                                                                                        |
 | `src/config/env.ts`         | Valida conexão de dados, credenciais JWT e Resend, além das configurações de execução e cookies.                                              |
 | `src/config/cookie.ts`      | Centraliza leitura, criação e remoção de cookies HTTP com `HttpOnly`, `SameSite=Lax` e expiração padrão de sete dias.                         |
 | `src/http/app.ts`           | Configura o Express, CORS com credenciais, leitura de cookies, Swagger e os middlewares globais.                                              |
 | `src/controllers/`          | Agrupa e valida as entradas HTTP por módulo funcional; enquanto não estão integrados aos casos de uso, devolvem respostas provisórias.        |
 | `src/http/docs/`            | Mantém o registry OpenAPI e a geração da documentação Swagger.                                                                                |
-| `src/http/middlewares/`     | Contém resposta de rota inexistente e tratamento de erros.                                                                                    |
+| `src/http/middlewares/`     | Contém autenticação por sessão, resposta de rota inexistente e tratamento de erros.                                                           |
 | `src/routes/`               | Declara as rotas HTTP por módulo e concentra seus prefixos no arquivo `index.ts`.                                                             |
 | `src/domains/errors/`       | Define erros de domínio, como `AppError`, com códigos HTTP padronizados.                                                                      |
 | `src/domains/models/`       | Define os modelos User, Partner, Category, Contact, PartnerPlanDiscount e Plan.                                                               |
