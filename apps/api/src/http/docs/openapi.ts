@@ -1,4 +1,5 @@
 import { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
+import { errorResponse } from '../../schemas/shared/error-response.js';
 
 export const registry = new OpenAPIRegistry();
 
@@ -11,4 +12,9 @@ registry.registerPath({
       description: 'OpenAPI document returned successfully.',
     },
   },
+});
+
+export const errorContent = (description: string) => ({
+  description,
+  content: { 'application/json': { schema: errorResponse } },
 });

@@ -28,7 +28,7 @@ const categoryUseCases = {
   updateCategory: new UpdateCategoryUseCase(dependencies.categoryRepository),
 };
 
-const listCategories: RequestHandler = async (request, response) => {
+const listCategories: RequestHandler = async (_request, response) => {
   const result = await categoryUseCases.listCategories.execute();
   return response.status(StatusCodes.OK).json(formatResponse(result));
 };

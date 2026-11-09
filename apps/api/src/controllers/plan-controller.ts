@@ -28,7 +28,7 @@ const planUseCases = {
   updatePlan: new UpdatePlanUseCase(dependencies.planRepository),
 };
 
-const listPlans: RequestHandler = async (request, response) => {
+const listPlans: RequestHandler = async (_request, response) => {
   const result = await planUseCases.listPlans.execute();
   return response.status(StatusCodes.OK).json(formatResponse(result));
 };

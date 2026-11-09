@@ -10,7 +10,8 @@ prisma.config.ts
 prisma/
 ├── migrations/
 │   └── 20261109000000_init/
-└── schema.prisma
+├── schema.prisma
+└── seed.ts
 src/
 ├── @types/
 │   └── express.d.ts
@@ -46,7 +47,8 @@ src/
 │   ├── auth/
 │   ├── category/
 │   ├── partner/
-│   └── plan/
+│   ├── plan/
+│   └── shared/
 ├── usecases/
 │   ├── auth/
 │   │   ├── get-current-user.ts
@@ -86,8 +88,9 @@ src/
 | Caminho                     | Responsabilidade                                                                                                                                                  |
 | --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `.env.example`              | Lista as variáveis de ambiente que podem configurar a API.                                                                                                        |
-| `prisma.config.ts`          | Configura o schema e a conexão usada pelas ferramentas de persistência.                                                                                           |
+| `prisma.config.ts`          | Configura o schema, a conexão e o seed usados pelas ferramentas de persistência.                                                                                  |
 | `prisma/schema.prisma`      | Declara a fonte de dados PostgreSQL, os modelos persistidos e a geração do cliente de acesso aos dados.                                                           |
+| `prisma/seed.ts`            | Cria ou atualiza o administrador inicial, usando a senha definida em `ADMIN_PASSWORD`; executado por `pnpm prisma:seed`.                                          |
 | `prisma/migrations/`        | Mantém o histórico versionado das mudanças no banco de dados.                                                                                                     |
 | `src/bootstrap.ts`          | Inicializa a aplicação.                                                                                                                                           |
 | `src/@types/`               | Estende os tipos de bibliotecas usadas pela aplicação.                                                                                                            |
@@ -97,14 +100,14 @@ src/
 | `src/controllers/`          | Agrupa e valida as entradas HTTP por módulo funcional; autenticação, categorias e planos delegam para seus casos de uso, enquanto parceiros permanece provisório. |
 | `src/http/docs/`            | Mantém o registry OpenAPI e a geração da documentação Swagger.                                                                                                    |
 | `src/http/middlewares/`     | Contém autenticação por sessão, resposta de rota inexistente e tratamento de erros.                                                                               |
-| `src/routes/`               | Declara as rotas HTTP por módulo e concentra seus prefixos no arquivo `index.ts`.                                                                                 |
+| `src/routes/`               | Declara as rotas HTTP por módulo, registra cada uma no OpenAPI e concentra seus prefixos no arquivo `index.ts`.                                                   |
 | `src/domains/errors/`       | Define erros de domínio, como `AppError`, com códigos HTTP padronizados.                                                                                          |
 | `src/domains/models/`       | Define os modelos User, Partner, Category, Contact, PartnerPlanDiscount e Plan.                                                                                   |
 | `src/domains/providers/`    | Define as abstrações de hash de credenciais, tokens JWT e envio de e-mails usadas pelos casos de uso.                                                             |
 | `src/domains/repositories/` | Define os contratos de acesso para User, Partner e suas entidades associadas.                                                                                     |
 | `src/repositories/prisma/`  | Implementa os contratos de repositório com o cliente Prisma, sem tratamento local de erros de persistência.                                                       |
 | `src/helpers/`              | Reúne funções auxiliares, como formatação de respostas e validação de entradas.                                                                                   |
-| `src/schemas/`              | Define schemas reutilizáveis, separados por módulo, para as entradas HTTP.                                                                                        |
+| `src/schemas/`              | Define schemas reutilizáveis, separados por módulo, para as entradas HTTP e o formato universal de erro em `shared/`.                                             |
 | `src/usecases/`             | Implementa os fluxos de autenticação, categorias e planos, organizados por módulo e com um arquivo por caso de uso; parceiros fica reservado.                     |
 | `src/database/prisma/`      | Mantém o singleton do cliente de acesso ao PostgreSQL e o código gerado a partir do schema.                                                                       |
 | `src/providers/`            | Implementa hash de credenciais, tokens JWT e envio de e-mails com os serviços configurados pela aplicação.                                                        |
