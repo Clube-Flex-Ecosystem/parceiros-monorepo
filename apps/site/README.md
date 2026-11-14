@@ -23,14 +23,14 @@ src/
 
 ## Variáveis de ambiente
 
-| Variável     | Descrição                            |
-| ------------ | ------------------------------------ |
-| `API_URL`    | URL base da API consumida pelo site. |
-| `PUBLIC_URL` | URL pública do site.                 |
+| Variável     | Descrição                                                                  |
+| ------------ | -------------------------------------------------------------------------- |
+| `API_URL`    | URL base da API consumida pelo site.                                       |
+| `PUBLIC_URL` | URL pública do site, usada como base do SEO (URLs canônicas e Open Graph). |
 
-## Favicon
+## SEO e favicon
 
-O `src/app/layout.tsx` define o favicon com os logos de `public/`, usando `logo.svg` no tema claro e `logo-white.svg` no tema escuro.
+O `src/app/layout.tsx` define título, descrição, URL canônica, Open Graph e Twitter, com `metadataBase` a partir de `PUBLIC_URL`. O favicon é definido com os logos de `public/`, usando `logo.svg` no tema claro e `logo-white.svg` no tema escuro.
 
 ## Scripts
 

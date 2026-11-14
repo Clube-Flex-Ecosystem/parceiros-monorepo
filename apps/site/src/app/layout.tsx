@@ -1,7 +1,9 @@
+import '../styles/globals.css';
+
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 
-import '../styles/globals.css';
+import { env } from '../config/env';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -13,7 +15,33 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
+const siteName = 'Parceiros Clube Flex';
+const description =
+  'Catálogo oficial de benefícios do Clube Flex: conheça os parceiros participantes, suas condições e os descontos de cada plano.';
+
 export const metadata: Metadata = {
+  metadataBase: new URL(env.PUBLIC_URL),
+  title: {
+    default: siteName,
+    template: `%s | ${siteName}`,
+  },
+  description,
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'pt_BR',
+    siteName,
+    title: siteName,
+    description,
+    url: '/',
+  },
+  twitter: {
+    card: 'summary',
+    title: siteName,
+    description,
+  },
   icons: {
     icon: [
       { url: '/logo.svg', type: 'image/svg+xml', media: '(prefers-color-scheme: light)' },
