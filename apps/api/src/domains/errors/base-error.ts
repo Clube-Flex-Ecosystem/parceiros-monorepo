@@ -1,6 +1,6 @@
 import { getReasonPhrase, StatusCodes } from 'http-status-codes';
 
-export class AppError extends Error {
+export class BaseError extends Error {
   public readonly code: string;
 
   constructor(
@@ -8,7 +8,7 @@ export class AppError extends Error {
     message = getReasonPhrase(statusCode),
   ) {
     super(message);
-    this.name = 'AppError';
+    this.name = 'BaseError';
     this.code = getReasonPhrase(statusCode);
   }
 }

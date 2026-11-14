@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import { StatusCodes } from 'http-status-codes';
 
 import { env } from '../config/env.js';
-import { AppError } from '../domains/errors/app-error.js';
+import { BaseError } from '../domains/errors/base-error.js';
 import type { JwtPayload, JwtProvider, JwtSignOptions } from '../domains/providers/jwt-provider.js';
 
 export class JsonwebtokenJwtProvider implements JwtProvider {
@@ -20,7 +20,7 @@ export class JsonwebtokenJwtProvider implements JwtProvider {
         expiresIn: options.expiresIn,
       });
     } catch {
-      throw new AppError(StatusCodes.INTERNAL_SERVER_ERROR, 'Não foi possível criar a sessão.');
+      throw new BaseError(StatusCodes.INTERNAL_SERVER_ERROR, 'Não foi possível criar a sessão.');
     }
   }
 
@@ -29,16 +29,16 @@ export class JsonwebtokenJwtProvider implements JwtProvider {
       const payload = jwt.verify(token, this.secret, { algorithms: ['HS256'] });
 
       if (typeof payload !== 'object' || payload === null || Array.isArray(payload)) {
-        throw new AppError(StatusCodes.UNAUTHORIZED, 'Sessão ausente ou inválida.');
+        throw new BaseError(StatusCodes.UNAUTHORIZED, 'Sessão ausente ou inválida.');
       }
 
       return payload;
     } catch (error) {
-      if (error instanceof AppError) {
+      if (error instanceof BaseError) {
         throw error;
       }
 
-      throw new AppError(StatusCodes.UNAUTHORIZED, 'Sessão ausente ou inválida.');
+      throw new BaseError(StatusCodes.UNAUTHORIZED, 'Sessão ausente ou inválida.');
     }
   }
 }

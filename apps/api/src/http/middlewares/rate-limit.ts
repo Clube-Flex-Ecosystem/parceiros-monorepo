@@ -1,7 +1,7 @@
 import { rateLimit } from 'express-rate-limit';
 import { StatusCodes } from 'http-status-codes';
 
-import { AppError } from '../../domains/errors/app-error.js';
+import { BaseError } from '../../domains/errors/base-error.js';
 
 export const rateLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -9,6 +9,6 @@ export const rateLimiter = rateLimit({
   standardHeaders: 'draft-8',
   legacyHeaders: false,
   message: () => {
-    return new AppError(StatusCodes.TOO_MANY_REQUESTS, 'Too many requests. Try again later.');
+    return new BaseError(StatusCodes.TOO_MANY_REQUESTS, 'Too many requests. Try again later.');
   },
 });

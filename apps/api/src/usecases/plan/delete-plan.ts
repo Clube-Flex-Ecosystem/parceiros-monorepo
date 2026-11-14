@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 
-import { AppError } from '../../domains/errors/app-error.js';
+import { BaseError } from '../../domains/errors/base-error.js';
 import type { PartnerPlanDiscountRepository } from '../../domains/repositories/partner-plan-discount-repository.js';
 import type { PlanRepository } from '../../domains/repositories/plan-repository.js';
 
@@ -18,13 +18,13 @@ export class DeletePlanUseCase {
     const plan = await this.planRepository.findById(input.id);
 
     if (!plan) {
-      throw new AppError(StatusCodes.NOT_FOUND, 'Plano não encontrado.');
+      throw new BaseError(StatusCodes.NOT_FOUND, 'Plano não encontrado.');
     }
 
     const discounts = await this.partnerPlanDiscountRepository.findByPlanId(input.id);
 
     if (discounts.length > 0) {
-      throw new AppError(StatusCodes.CONFLICT, 'Plano associado a descontos de parceiros.');
+      throw new BaseError(StatusCodes.CONFLICT, 'Plano associado a descontos de parceiros.');
     }
 
     await this.planRepository.delete(input.id);

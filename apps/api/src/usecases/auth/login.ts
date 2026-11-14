@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 
-import { AppError } from '../../domains/errors/app-error.js';
+import { BaseError } from '../../domains/errors/base-error.js';
 import type { HashProvider } from '../../domains/providers/hash-provider.js';
 import type { JwtProvider } from '../../domains/providers/jwt-provider.js';
 import type { UserRepository } from '../../domains/repositories/user-repository.js';
@@ -30,7 +30,7 @@ export class LoginUseCase {
       : false;
 
     if (!user || !isPasswordValid) {
-      throw new AppError(StatusCodes.UNAUTHORIZED, 'Credenciais inválidas.');
+      throw new BaseError(StatusCodes.UNAUTHORIZED, 'Credenciais inválidas.');
     }
 
     const expiresIn = 8 * 60 * 60;

@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 
-import { AppError } from '../../domains/errors/app-error.js';
+import { BaseError } from '../../domains/errors/base-error.js';
 import type { CategoryRepository } from '../../domains/repositories/category-repository.js';
 import type { PartnerRepository } from '../../domains/repositories/partner-repository.js';
 
@@ -18,13 +18,13 @@ export class DeleteCategoryUseCase {
     const category = await this.categoryRepository.findById(input.id);
 
     if (!category) {
-      throw new AppError(StatusCodes.NOT_FOUND, 'Categoria não encontrada.');
+      throw new BaseError(StatusCodes.NOT_FOUND, 'Categoria não encontrada.');
     }
 
     const partners = await this.partnerRepository.findAll({ categoryId: input.id });
 
     if (partners.length > 0) {
-      throw new AppError(StatusCodes.CONFLICT, 'Categoria associada a parceiros.');
+      throw new BaseError(StatusCodes.CONFLICT, 'Categoria associada a parceiros.');
     }
 
     await this.categoryRepository.delete(input.id);

@@ -3,7 +3,7 @@ import { Resend } from 'resend';
 import { StatusCodes } from 'http-status-codes';
 
 import { env } from '../config/env.js';
-import { AppError } from '../domains/errors/app-error.js';
+import { BaseError } from '../domains/errors/base-error.js';
 import type { MailProvider, SendMailInput } from '../domains/providers/mail-provider.js';
 
 export class ResendMailProvider implements MailProvider {
@@ -26,14 +26,14 @@ export class ResendMailProvider implements MailProvider {
       });
 
       if (error) {
-        throw new AppError(StatusCodes.SERVICE_UNAVAILABLE, 'Não foi possível enviar o e-mail.');
+        throw new BaseError(StatusCodes.SERVICE_UNAVAILABLE, 'Não foi possível enviar o e-mail.');
       }
     } catch (error) {
-      if (error instanceof AppError) {
+      if (error instanceof BaseError) {
         throw error;
       }
 
-      throw new AppError(StatusCodes.SERVICE_UNAVAILABLE, 'Não foi possível enviar o e-mail.');
+      throw new BaseError(StatusCodes.SERVICE_UNAVAILABLE, 'Não foi possível enviar o e-mail.');
     }
   }
 }

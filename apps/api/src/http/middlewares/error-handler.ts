@@ -1,10 +1,10 @@
 import type { ErrorRequestHandler } from 'express';
 import { getReasonPhrase, StatusCodes } from 'http-status-codes';
 
-import { AppError } from '../../domains/errors/app-error.js';
+import { BaseError } from '../../domains/errors/base-error.js';
 
 export const errorHandler: ErrorRequestHandler = (error, _request, response, _next) => {
-  if (error instanceof AppError) {
+  if (error instanceof BaseError) {
     console.error(
       JSON.stringify({
         level: 'error',

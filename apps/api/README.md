@@ -106,7 +106,7 @@ src/
 | `src/http/docs/`            | Mantém o registry OpenAPI e a geração da documentação Swagger.                                                                                                    |
 | `src/http/middlewares/`     | Contém autenticação por sessão, limite de requisições, resposta de rota inexistente e tratamento de erros.                                                        |
 | `src/routes/`               | Declara as rotas HTTP por módulo, registra cada uma no OpenAPI e concentra seus prefixos no arquivo `index.ts`.                                                   |
-| `src/domains/errors/`       | Define erros de domínio, como `AppError`, com códigos HTTP padronizados.                                                                                          |
+| `src/domains/errors/`       | Define erros de domínio, como `BaseError`, com códigos HTTP padronizados.                                                                                         |
 | `src/domains/models/`       | Define os modelos User, Partner, Category, Contact, PartnerPlanDiscount e Plan.                                                                                   |
 | `src/domains/providers/`    | Define as abstrações de hash de credenciais, tokens JWT e envio de e-mails usadas pelos casos de uso.                                                             |
 | `src/domains/repositories/` | Define os contratos de acesso para User, Partner e suas entidades associadas.                                                                                     |

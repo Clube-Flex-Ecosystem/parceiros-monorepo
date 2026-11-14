@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 
-import { AppError } from '../../domains/errors/app-error.js';
+import { BaseError } from '../../domains/errors/base-error.js';
 import type { Category } from '../../domains/models/category.js';
 import type { CategoryRepository } from '../../domains/repositories/category-repository.js';
 
@@ -18,7 +18,7 @@ export class UpdateCategoryUseCase {
     const category = await this.categoryRepository.findById(input.id);
 
     if (!category) {
-      throw new AppError(StatusCodes.NOT_FOUND, 'Categoria não encontrada.');
+      throw new BaseError(StatusCodes.NOT_FOUND, 'Categoria não encontrada.');
     }
 
     return this.categoryRepository.update(input.id, { name: input.name });

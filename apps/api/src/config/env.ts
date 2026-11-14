@@ -3,7 +3,7 @@ import { createEnv } from '@t3-oss/env-core';
 import { StatusCodes } from 'http-status-codes';
 import { z } from 'zod';
 
-import { AppError } from '../domains/errors/app-error.js';
+import { BaseError } from '../domains/errors/base-error.js';
 
 const env = createEnv({
   server: {
@@ -20,7 +20,7 @@ const env = createEnv({
   runtimeEnv: process.env,
   emptyStringAsUndefined: true,
   onValidationError: () => {
-    throw new AppError(StatusCodes.INTERNAL_SERVER_ERROR, 'Invalid environment variables.');
+    throw new BaseError(StatusCodes.INTERNAL_SERVER_ERROR, 'Invalid environment variables.');
   },
 });
 

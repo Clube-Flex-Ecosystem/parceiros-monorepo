@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 
-import { AppError } from '../../domains/errors/app-error.js';
+import { BaseError } from '../../domains/errors/base-error.js';
 import type { Category } from '../../domains/models/category.js';
 import type { CategoryRepository } from '../../domains/repositories/category-repository.js';
 
@@ -17,7 +17,7 @@ export class CreateCategoryUseCase {
     const categoryWithName = await this.categoryRepository.findByName(input.name);
 
     if (categoryWithName) {
-      throw new AppError(StatusCodes.CONFLICT, 'Já existe uma categoria com este nome.');
+      throw new BaseError(StatusCodes.CONFLICT, 'Já existe uma categoria com este nome.');
     }
 
     return this.categoryRepository.create({ name: input.name });
