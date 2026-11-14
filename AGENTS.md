@@ -42,5 +42,5 @@
 ## Estrutura do monorepo
 
 - Use pnpm para instalar dependências e executar scripts do monorepo. Não gere ou mantenha lockfiles do npm.
-- Use `apps/api` para a aplicação de API e `apps/web` para a aplicação web.
+- Use `apps/api` para a aplicação de API e `apps/site` para o site.
 - Não recrie a pasta `packages/` sem uma decisão explícita de arquitetura documentada.

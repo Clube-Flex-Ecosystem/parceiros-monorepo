@@ -8,3 +8,5 @@ coverage/
 .env
 .env.*
 !.env.example
+out/
+next-env.d.ts
