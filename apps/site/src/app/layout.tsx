@@ -4,6 +4,9 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 
 import { env } from '../shared/config/env';
+import { NuqsProvider } from '../shared/providers/nuqs-provider';
+import { QueryProvider } from '../shared/providers/query-provider';
+import { ToastProvider } from '../shared/providers/toast-provider';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -53,7 +56,12 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: LayoutProps<'/'>) => {
   return (
     <html lang="pt-BR" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col">{children}</body>
+      <body className="flex min-h-full flex-col">
+        <QueryProvider>
+          <NuqsProvider>{children}</NuqsProvider>
+        </QueryProvider>
+        <ToastProvider />
+      </body>
     </html>
   );
 };

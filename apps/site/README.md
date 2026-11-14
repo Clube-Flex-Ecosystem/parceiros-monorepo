@@ -152,11 +152,15 @@ src/
     ├── lib/
     │   ├── api-client.ts
     │   └── api-types.d.ts
+    ├── providers/
+    │   ├── nuqs-provider.tsx
+    │   ├── query-provider.tsx
+    │   └── toast-provider.tsx
     └── styles/
         └── globals.css
 ```
 
-As rotas ficam em `src/app/`, com nomes de pastas em inglês, e `src/features/` tem uma pasta para cada rota, agrupada por contexto (`site`, `auth` e `admin`). Cada feature organiza seu código em `api`, `components`, `schemas` e `utils`. A pasta `components` tem `pages`, com o componente da página onde os componentes de `ui` são reunidos, e `ui`, com os componentes exclusivos de cada página. A pasta `api` tem uma função por endpoint, usando o cliente de `src/shared/lib/`. As chamadas de `logout` e `get-current-user` ficam em `auth/login`, e as de parceiros ficam em `new-partner` (criação) e `edit-partner` (edição e estado). O que é compartilhado entre as rotas fica em `src/shared/`: componentes (`components`), com os layouts de cada contexto em `layouts` e os componentes de interface em `ui`, configuração (`config`), cliente e tipos da API (`lib`) e estilos globais (`styles`).
+As rotas ficam em `src/app/`, com nomes de pastas em inglês, e `src/features/` tem uma pasta para cada rota, agrupada por contexto (`site`, `auth` e `admin`). Cada feature organiza seu código em `api`, `components`, `schemas` e `utils`. A pasta `components` tem `pages`, com o componente da página onde os componentes de `ui` são reunidos, e `ui`, com os componentes exclusivos de cada página. A pasta `api` tem uma função por endpoint, usando o cliente de `src/shared/lib/`. As chamadas de `logout` e `get-current-user` ficam em `auth/login`, e as de parceiros ficam em `new-partner` (criação) e `edit-partner` (edição e estado). O que é compartilhado entre as rotas fica em `src/shared/`: componentes (`components`), com os layouts de cada contexto em `layouts` e os componentes de interface em `ui`, configuração (`config`), cliente e tipos da API (`lib`), providers globais (`providers`) e estilos globais (`styles`).
 
 ## Variáveis de ambiente
 
@@ -188,6 +192,16 @@ const { data, error } = await api.GET('/admin/categories', {
   cache: 'no-store',
 });
 ```
+
+## Providers
+
+Os providers globais ficam em `src/shared/providers/`, um por arquivo, e são aplicados no `src/app/layout.tsx`.
+
+| Arquivo              | Responsabilidade                                                                                      |
+| -------------------- | ----------------------------------------------------------------------------------------------------- |
+| `query-provider.tsx` | Fornece o TanStack Query, criando o `QueryClient` com `useState` para mantê-lo estável entre renders. |
+| `nuqs-provider.tsx`  | Fornece o adaptador do `nuqs` para estado na URL no App Router.                                       |
+| `toast-provider.tsx` | Renderiza o `Toaster` do `sonner` para as notificações.                                               |
 
 ## Scripts
 

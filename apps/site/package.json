@@ -10,10 +10,13 @@
     "typecheck": "next typegen && tsc --noEmit --project tsconfig.json"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.107.1",
     "next": "16.4.6",
+    "nuqs": "^2.10.3",
     "openapi-fetch": "^0.17.0",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "sonner": "^2.0.8"
   },
   "devDependencies": {
     "@tailwindcss/turbopack": "4.3.3",
