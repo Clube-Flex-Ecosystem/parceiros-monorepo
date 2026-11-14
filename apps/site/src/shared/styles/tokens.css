@@ -525,14 +525,18 @@
   --duration-slow: 320ms;
   --duration-slower: 480ms;
 
-  /* Camadas: use com `z-(--z-modal)`. */
+  /*
+   * Camadas: use com `z-(--z-modal)`. Menus, selects e tooltips ficam acima de
+   * modais para funcionarem dentro deles.
+   */
   --z-base: 0;
   --z-raised: 10;
   --z-sticky: 30;
-  --z-dropdown: 40;
-  --z-overlay: 50;
-  --z-modal: 60;
+  --z-overlay: 40;
+  --z-modal: 50;
+  --z-dropdown: 60;
   --z-toast: 70;
+  --z-tooltip: 80;
 
   /* Cupom: tamanho do recorte lateral e espaçamento do picote. */
   --ticket-notch-size: 0.625rem;

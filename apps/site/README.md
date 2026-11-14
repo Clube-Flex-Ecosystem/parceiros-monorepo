@@ -147,11 +147,32 @@ src/
     │   │   └── site/
     │   │       └── index.tsx
     │   └── ui/
+    │       └── primitives/
+    │           ├── alert-dialog.tsx
+    │           ├── badge.tsx
+    │           ├── button.tsx
+    │           ├── card.tsx
+    │           ├── checkbox.tsx
+    │           ├── dialog.tsx
+    │           ├── dropdown-menu.tsx
+    │           ├── input.tsx
+    │           ├── label.tsx
+    │           ├── radio-group.tsx
+    │           ├── scroll-area.tsx
+    │           ├── select.tsx
+    │           ├── separator.tsx
+    │           ├── skeleton.tsx
+    │           ├── switch.tsx
+    │           ├── tabs.tsx
+    │           ├── textarea.tsx
+    │           └── tooltip.tsx
     ├── config/
     │   └── env.ts
     ├── lib/
     │   ├── api-client.ts
-    │   └── api-types.d.ts
+    │   ├── api-types.d.ts
+    │   ├── cn.ts
+    │   └── tv.ts
     ├── providers/
     │   ├── nuqs-provider.tsx
     │   ├── query-provider.tsx
@@ -205,6 +226,26 @@ As fontes são carregadas em `src/app/layout.tsx` e expostas como `--font-archiv
 | `scrollbar-none`                      | Oculta a barra de rolagem mantendo a rolagem.                                             |
 
 Os tokens do tema geram utilitários do Tailwind, como `bg-surface`, `text-muted-foreground`, `bg-status-published-soft`, `font-display`, `text-discount`, `h-control-md`, `max-w-content`, `px-gutter`, `rounded-lg`, `shadow-md`, `ease-flex` e `animate-dash-in`. Durações e camadas não têm namespace no Tailwind e são usadas como variáveis, por exemplo `duration-(--duration-fast)` e `z-(--z-modal)`. O tema escuro segue a preferência do sistema.
+
+## Primitivos de interface
+
+Os componentes de `src/shared/components/ui/primitives/` usam os primitivos do Radix UI (pacote `radix-ui`), estilizados com os tokens do design system. Cada arquivo agrupa um primitivo e as suas partes. As variantes são declaradas com `tailwind-variants` e os ícones vêm de `lucide-react`.
+
+| Arquivo                                             | Primitivo                                                                                                              |
+| --------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `button.tsx`                                        | Botão com variantes `primary`, `secondary`, `outline`, `ghost`, `danger` e `link`, estado de carregamento e `asChild`. |
+| `input.tsx` e `textarea.tsx`                        | Campos de texto, com a base de campo compartilhada em `fieldVariants`.                                                 |
+| `label.tsx`                                         | Rótulo de campo.                                                                                                       |
+| `checkbox.tsx`, `radio-group.tsx` e `switch.tsx`    | Controles de seleção.                                                                                                  |
+| `select.tsx`                                        | Lista de seleção.                                                                                                      |
+| `dialog.tsx` e `alert-dialog.tsx`                   | Janela modal e janela de confirmação.                                                                                  |
+| `dropdown-menu.tsx` e `tooltip.tsx`                 | Menu de ações e dica de contexto.                                                                                      |
+| `tabs.tsx`                                          | Abas.                                                                                                                  |
+| `card.tsx`                                          | Card com variantes `default`, `muted` e `ticket` (cupom, com linha picotada).                                          |
+| `badge.tsx`                                         | Selo com variantes de feedback e dos estados do parceiro (`draft`, `published` e `inactive`).                          |
+| `separator.tsx`, `scroll-area.tsx` e `skeleton.tsx` | Divisor, área de rolagem e placeholder de carregamento.                                                                |
+
+Os utilitários de classes ficam em `src/shared/lib/`: `cn.ts` combina classes com `clsx` e `tailwind-merge`, já estendido com os tokens do design system para que conflitos como `text-sm` e `text-discount` sejam resolvidos, e `tv.ts` exporta o `tv` do `tailwind-variants` usando esse mesmo merge.
 
 ## Tipos da API
 
