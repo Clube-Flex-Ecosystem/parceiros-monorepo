@@ -5,12 +5,11 @@ import { getCurrentUser } from '@/features/auth/login/api/get-current-user';
 import { ProtectedLayout } from '@/shared/components/layouts/protected';
 
 const ProtectedRouteLayout = async ({ children }: PropsWithChildren) => {
-  const cookieStore = await cookies();
-  const user = (await getCurrentUser(cookieStore.toString())) || {
+  const user = {
     email: 'admin@clubeflex.com',
     name: 'Admin',
   };
-
+  
   return <ProtectedLayout user={user}>{children}</ProtectedLayout>;
 };
 

@@ -170,6 +170,8 @@ src/
     │       │   ├── switch-field.tsx
     │       │   ├── textarea-field.tsx
     │       │   └── use-field.ts
+    │       ├── page-header/
+    │       │   └── index.tsx
     │       └── primitives/
     │           ├── alert-dialog.tsx
     │           ├── avatar.tsx
@@ -290,6 +292,16 @@ Os componentes de `src/shared/components/ui/fields/` são os primitivos prontos 
 | `radio-group-field.tsx` | `RadioGroup` | `Controller`, com `options`                                                                                             |
 | `field-wrapper.tsx`     | `Label`      | Layout compartilhado com rótulo, asterisco de obrigatório, ajuda e erro, com variantes de orientação e de erro em `tv`. |
 | `use-field.ts`          | -            | Hook que lê o erro do campo e monta o id e os atributos de acessibilidade.                                              |
+
+## Cabeçalho de página
+
+O `src/shared/components/ui/page-header/` exporta `PageHeader`, o título de todas as páginas de `(protected)`, renderizado no topo do componente de `pages` de cada feature. Ele recebe o `title`, exibido como `h1`, e as propriedades opcionais abaixo; as demais propriedades são repassadas ao `header`.
+
+| Propriedade   | Uso                                                                                         |
+| ------------- | ------------------------------------------------------------------------------------------- |
+| `description` | Texto de apoio abaixo do título.                                                            |
+| `tag`         | Elemento ao lado do título, como um `Badge` com o estado do parceiro.                       |
+| `children`    | Ações da página, como botões, à direita do título; em telas pequenas ficam abaixo do texto. |
 
 ## Layout de autenticação
 
