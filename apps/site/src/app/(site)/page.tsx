@@ -1,5 +1,7 @@
+import { SitePage } from '@/features/site/home/components/pages';
+
 const SiteRoute = () => {
-  return <div>Home</div>;
+  return <SitePage />;
 };
 
 export default SiteRoute;

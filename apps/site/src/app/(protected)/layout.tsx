@@ -1,11 +1,3 @@
-import type { ReactNode } from 'react';
-
-type ProtectedLayoutProps = {
-  children: ReactNode;
-};
-
-const ProtectedLayout = ({ children }: ProtectedLayoutProps) => {
-  return <>{children}</>;
-};
+import { ProtectedLayout } from '@/shared/components/layouts/protected';
 
 export default ProtectedLayout;

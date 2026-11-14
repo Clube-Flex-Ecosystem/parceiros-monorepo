@@ -1,5 +1,7 @@
+import { AdminCategoriesPage } from '@/features/admin/categories/components/pages';
+
 const AdminCategoriesRoute = () => {
-  return <div>Admin categorias</div>;
+  return <AdminCategoriesPage />;
 };
 
 export default AdminCategoriesRoute;

@@ -1,5 +1,7 @@
+import { AdminPlansPage } from '@/features/admin/plans/components/pages';
+
 const AdminPlansRoute = () => {
-  return <div>Admin planos</div>;
+  return <AdminPlansPage />;
 };
 
 export default AdminPlansRoute;

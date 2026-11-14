@@ -43,57 +43,110 @@ src/
 │   ├── admin/
 │   │   ├── categories/
 │   │   │   ├── api/
+│   │   │   │   ├── create-category.ts
+│   │   │   │   ├── delete-category.ts
+│   │   │   │   ├── list-categories.ts
+│   │   │   │   └── update-category.ts
 │   │   │   ├── components/
+│   │   │   │   ├── pages/
+│   │   │   │   │   └── index.tsx
+│   │   │   │   └── ui/
 │   │   │   ├── schemas/
 │   │   │   └── utils/
 │   │   ├── edit-partner/
 │   │   │   ├── api/
+│   │   │   │   ├── update-partner-status.ts
+│   │   │   │   └── update-partner.ts
 │   │   │   ├── components/
+│   │   │   │   ├── pages/
+│   │   │   │   │   └── index.tsx
+│   │   │   │   └── ui/
 │   │   │   ├── schemas/
 │   │   │   └── utils/
 │   │   ├── home/
 │   │   │   ├── api/
 │   │   │   ├── components/
+│   │   │   │   ├── pages/
+│   │   │   │   │   └── index.tsx
+│   │   │   │   └── ui/
 │   │   │   ├── schemas/
 │   │   │   └── utils/
 │   │   ├── new-partner/
 │   │   │   ├── api/
+│   │   │   │   └── create-partner.ts
 │   │   │   ├── components/
+│   │   │   │   ├── pages/
+│   │   │   │   │   └── index.tsx
+│   │   │   │   └── ui/
 │   │   │   ├── schemas/
 │   │   │   └── utils/
 │   │   ├── partners/
 │   │   │   ├── api/
 │   │   │   ├── components/
+│   │   │   │   ├── pages/
+│   │   │   │   │   └── index.tsx
+│   │   │   │   └── ui/
 │   │   │   ├── schemas/
 │   │   │   └── utils/
 │   │   └── plans/
 │   │       ├── api/
+│   │       │   ├── create-plan.ts
+│   │       │   ├── delete-plan.ts
+│   │       │   ├── list-plans.ts
+│   │       │   └── update-plan.ts
 │   │       ├── components/
+│   │       │   ├── pages/
+│   │       │   │   └── index.tsx
+│   │       │   └── ui/
 │   │       ├── schemas/
 │   │       └── utils/
 │   ├── auth/
 │   │   └── login/
 │   │       ├── api/
+│   │       │   ├── get-current-user.ts
+│   │       │   ├── login.ts
+│   │       │   └── logout.ts
 │   │       ├── components/
+│   │       │   ├── pages/
+│   │       │   │   └── index.tsx
+│   │       │   └── ui/
 │   │       ├── schemas/
 │   │       └── utils/
 │   └── site/
 │       ├── home/
 │       │   ├── api/
 │       │   ├── components/
+│       │   │   ├── pages/
+│       │   │   │   └── index.tsx
+│       │   │   └── ui/
 │       │   ├── schemas/
 │       │   └── utils/
 │       ├── partner/
 │       │   ├── api/
 │       │   ├── components/
+│       │   │   ├── pages/
+│       │   │   │   └── index.tsx
+│       │   │   └── ui/
 │       │   ├── schemas/
 │       │   └── utils/
 │       └── partners/
 │           ├── api/
 │           ├── components/
+│           │   ├── pages/
+│           │   │   └── index.tsx
+│           │   └── ui/
 │           ├── schemas/
 │           └── utils/
 └── shared/
+    ├── components/
+    │   ├── layouts/
+    │   │   ├── auth/
+    │   │   │   └── index.tsx
+    │   │   ├── protected/
+    │   │   │   └── index.tsx
+    │   │   └── site/
+    │   │       └── index.tsx
+    │   └── ui/
     ├── config/
     │   └── env.ts
     ├── lib/
@@ -103,7 +156,7 @@ src/
         └── globals.css
 ```
 
-As rotas ficam em `src/app/`, com nomes de pastas em inglês, e `src/features/` tem uma pasta para cada rota, agrupada por contexto (`site`, `auth` e `admin`). Cada feature organiza seu código em `api`, `components`, `schemas` e `utils`. O que é compartilhado entre as rotas fica em `src/shared/`: configuração (`config`), cliente e tipos da API (`lib`) e estilos globais (`styles`).
+As rotas ficam em `src/app/`, com nomes de pastas em inglês, e `src/features/` tem uma pasta para cada rota, agrupada por contexto (`site`, `auth` e `admin`). Cada feature organiza seu código em `api`, `components`, `schemas` e `utils`. A pasta `components` tem `pages`, com o componente da página onde os componentes de `ui` são reunidos, e `ui`, com os componentes exclusivos de cada página. A pasta `api` tem uma função por endpoint, usando o cliente de `src/shared/lib/`. As chamadas de `logout` e `get-current-user` ficam em `auth/login`, e as de parceiros ficam em `new-partner` (criação) e `edit-partner` (edição e estado). O que é compartilhado entre as rotas fica em `src/shared/`: componentes (`components`), com os layouts de cada contexto em `layouts` e os componentes de interface em `ui`, configuração (`config`), cliente e tipos da API (`lib`) e estilos globais (`styles`).
 
 ## Variáveis de ambiente
 

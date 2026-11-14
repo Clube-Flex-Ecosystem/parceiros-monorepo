@@ -1,11 +1,3 @@
-import type { ReactNode } from 'react';
-
-type SiteLayoutProps = {
-  children: ReactNode;
-};
-
-const SiteLayout = ({ children }: SiteLayoutProps) => {
-  return <>{children}</>;
-};
+import { SiteLayout } from '@/shared/components/layouts/site';
 
 export default SiteLayout;

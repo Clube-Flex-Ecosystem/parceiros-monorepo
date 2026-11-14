@@ -1,5 +1,7 @@
+import { LoginPage } from '@/features/auth/login/components/pages';
+
 const LoginRoute = () => {
-  return <div>Login</div>;
+  return <LoginPage />;
 };
 
 export default LoginRoute;

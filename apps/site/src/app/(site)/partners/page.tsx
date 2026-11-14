@@ -1,5 +1,7 @@
+import { PartnersPage } from '@/features/site/partners/components/pages';
+
 const PartnersRoute = () => {
-  return <div>Parceiros</div>;
+  return <PartnersPage />;
 };
 
 export default PartnersRoute;

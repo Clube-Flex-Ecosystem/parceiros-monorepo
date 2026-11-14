@@ -1,5 +1,7 @@
+import { AdminNewPartnerPage } from '@/features/admin/new-partner/components/pages';
+
 const AdminNewPartnerRoute = () => {
-  return <div>Novo parceiro</div>;
+  return <AdminNewPartnerPage />;
 };
 
 export default AdminNewPartnerRoute;
