@@ -147,6 +147,15 @@ src/
     │   │   └── site/
     │   │       └── index.tsx
     │   └── ui/
+    │       ├── fields/
+    │       │   ├── checkbox-field.tsx
+    │       │   ├── field-wrapper.tsx
+    │       │   ├── input-field.tsx
+    │       │   ├── radio-group-field.tsx
+    │       │   ├── select-field.tsx
+    │       │   ├── switch-field.tsx
+    │       │   ├── textarea-field.tsx
+    │       │   └── use-field.ts
     │       └── primitives/
     │           ├── alert-dialog.tsx
     │           ├── badge.tsx
@@ -246,6 +255,21 @@ Os componentes de `src/shared/components/ui/primitives/` usam os primitivos do R
 | `separator.tsx`, `scroll-area.tsx` e `skeleton.tsx` | Divisor, área de rolagem e placeholder de carregamento.                                                                |
 
 Os utilitários de classes ficam em `src/shared/lib/`: `cn.ts` combina classes com `clsx` e `tailwind-merge`, já estendido com os tokens do design system para que conflitos como `text-sm` e `text-discount` sejam resolvidos, e `tv.ts` exporta o `tv` do `tailwind-variants` usando esse mesmo merge.
+
+## Campos de formulário
+
+Os componentes de `src/shared/components/ui/fields/` são os primitivos prontos para uso em formulários do React Hook Form. Cada campo lê o formulário pelo `useFormContext`, então deve ser renderizado dentro de um `FormProvider`. Ele recebe o `name` do campo e as mesmas propriedades do primitivo correspondente, mais `label` e `helpText`. O erro do formulário substitui o texto de ajuda e é ligado ao controle por `aria-invalid` e `aria-describedby`. Nomes aninhados, como `discounts.0.discountPercent`, funcionam normalmente.
+
+| Arquivo                 | Primitivo    | Integração                                                                                                              |
+| ----------------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------- |
+| `input-field.tsx`       | `Input`      | `register`                                                                                                              |
+| `textarea-field.tsx`    | `Textarea`   | `register`                                                                                                              |
+| `select-field.tsx`      | `Select`     | `Controller`, com `options` e `placeholder`                                                                             |
+| `checkbox-field.tsx`    | `Checkbox`   | `Controller`, com rótulo ao lado do controle                                                                            |
+| `switch-field.tsx`      | `Switch`     | `Controller`, com rótulo ao lado do controle                                                                            |
+| `radio-group-field.tsx` | `RadioGroup` | `Controller`, com `options`                                                                                             |
+| `field-wrapper.tsx`     | `Label`      | Layout compartilhado com rótulo, asterisco de obrigatório, ajuda e erro, com variantes de orientação e de erro em `tv`. |
+| `use-field.ts`          | -            | Hook que lê o erro do campo e monta o id e os atributos de acessibilidade.                                              |
 
 ## Tipos da API
 
