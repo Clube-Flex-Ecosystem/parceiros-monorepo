@@ -13,13 +13,93 @@ public/
 └── logo.svg
 src/
 ├── app/
-│   ├── layout.tsx
-│   └── page.tsx
+│   ├── (auth)/
+│   │   ├── login/
+│   │   │   └── page.tsx
+│   │   └── layout.tsx
+│   ├── (protected)/
+│   │   ├── admin/
+│   │   │   ├── categories/
+│   │   │   │   └── page.tsx
+│   │   │   ├── partners/
+│   │   │   │   ├── [id]/
+│   │   │   │   │   └── page.tsx
+│   │   │   │   ├── new/
+│   │   │   │   │   └── page.tsx
+│   │   │   │   └── page.tsx
+│   │   │   ├── plans/
+│   │   │   │   └── page.tsx
+│   │   │   └── page.tsx
+│   │   └── layout.tsx
+│   ├── (site)/
+│   │   ├── partners/
+│   │   │   ├── [slug]/
+│   │   │   │   └── page.tsx
+│   │   │   └── page.tsx
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   └── layout.tsx
 ├── config/
 │   └── env.ts
+├── features/
+│   ├── admin/
+│   │   ├── categories/
+│   │   │   ├── api/
+│   │   │   ├── components/
+│   │   │   ├── schemas/
+│   │   │   └── utils/
+│   │   ├── edit-partner/
+│   │   │   ├── api/
+│   │   │   ├── components/
+│   │   │   ├── schemas/
+│   │   │   └── utils/
+│   │   ├── home/
+│   │   │   ├── api/
+│   │   │   ├── components/
+│   │   │   ├── schemas/
+│   │   │   └── utils/
+│   │   ├── new-partner/
+│   │   │   ├── api/
+│   │   │   ├── components/
+│   │   │   ├── schemas/
+│   │   │   └── utils/
+│   │   ├── partners/
+│   │   │   ├── api/
+│   │   │   ├── components/
+│   │   │   ├── schemas/
+│   │   │   └── utils/
+│   │   └── plans/
+│   │       ├── api/
+│   │       ├── components/
+│   │       ├── schemas/
+│   │       └── utils/
+│   ├── auth/
+│   │   └── login/
+│   │       ├── api/
+│   │       ├── components/
+│   │       ├── schemas/
+│   │       └── utils/
+│   └── site/
+│       ├── home/
+│       │   ├── api/
+│       │   ├── components/
+│       │   ├── schemas/
+│       │   └── utils/
+│       ├── partner/
+│       │   ├── api/
+│       │   ├── components/
+│       │   ├── schemas/
+│       │   └── utils/
+│       └── partners/
+│           ├── api/
+│           ├── components/
+│           ├── schemas/
+│           └── utils/
 └── styles/
     └── globals.css
 ```
+
+As rotas ficam em `src/app/`, com nomes de pastas em inglês, e `src/features/` tem uma pasta para cada rota, agrupada por contexto (`site`, `auth` e `admin`). Cada feature organiza seu código em `api`, `components`, `schemas` e `utils`.
 
 ## Variáveis de ambiente
 
