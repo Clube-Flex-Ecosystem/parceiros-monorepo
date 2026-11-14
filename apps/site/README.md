@@ -97,12 +97,13 @@ src/
     ├── config/
     │   └── env.ts
     ├── lib/
+    │   ├── api-client.ts
     │   └── api-types.d.ts
     └── styles/
         └── globals.css
 ```
 
-As rotas ficam em `src/app/`, com nomes de pastas em inglês, e `src/features/` tem uma pasta para cada rota, agrupada por contexto (`site`, `auth` e `admin`). Cada feature organiza seu código em `api`, `components`, `schemas` e `utils`. O que é compartilhado entre as rotas fica em `src/shared/`: configuração (`config`), tipos gerados da API (`lib`) e estilos globais (`styles`).
+As rotas ficam em `src/app/`, com nomes de pastas em inglês, e `src/features/` tem uma pasta para cada rota, agrupada por contexto (`site`, `auth` e `admin`). Cada feature organiza seu código em `api`, `components`, `schemas` e `utils`. O que é compartilhado entre as rotas fica em `src/shared/`: configuração (`config`), cliente e tipos da API (`lib`) e estilos globais (`styles`).
 
 ## Variáveis de ambiente
 
@@ -124,6 +125,16 @@ pnpm --filter @parceiros/site generate:types
 ```
 
 Sempre que os contratos da API mudarem, execute o comando novamente e versione o arquivo atualizado.
+
+## Cliente da API
+
+O `src/shared/lib/api-client.ts` exporta `api`, um cliente criado com `openapi-fetch` sobre o `fetch` nativo e tipado pelo `api-types.d.ts`, com `API_URL` como base. Como usa o `fetch` do Next.js, as opções `next: { revalidate, tags }` e `cache` funcionam normalmente.
+
+```ts
+const { data, error } = await api.GET('/admin/categories', {
+  cache: 'no-store',
+});
+```
 
 ## Scripts
 
