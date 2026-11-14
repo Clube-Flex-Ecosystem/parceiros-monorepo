@@ -141,6 +141,11 @@ src/
     ├── components/
     │   ├── layouts/
     │   │   ├── auth/
+    │   │   │   ├── auth-form-panel.tsx
+    │   │   │   ├── auth-showcase-illustration.tsx
+    │   │   │   ├── auth-showcase-message.tsx
+    │   │   │   ├── auth-showcase-panel.tsx
+    │   │   │   ├── auth-showcase-window.tsx
     │   │   │   └── index.tsx
     │   │   ├── protected/
     │   │   │   └── index.tsx
@@ -270,6 +275,19 @@ Os componentes de `src/shared/components/ui/fields/` são os primitivos prontos 
 | `radio-group-field.tsx` | `RadioGroup` | `Controller`, com `options`                                                                                             |
 | `field-wrapper.tsx`     | `Label`      | Layout compartilhado com rótulo, asterisco de obrigatório, ajuda e erro, com variantes de orientação e de erro em `tv`. |
 | `use-field.ts`          | -            | Hook que lê o erro do campo e monta o id e os atributos de acessibilidade.                                              |
+
+## Layout de autenticação
+
+O `src/shared/components/layouts/auth/` monta as telas de `(auth)` em duas colunas: à esquerda, o card com o conteúdo da página; à direita, a partir de telas grandes, o painel da marca. Em telas menores só o card é exibido. O layout é dividido em partes para facilitar a manutenção.
+
+| Arquivo                          | Responsabilidade                                                                               |
+| -------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `index.tsx`                      | Organiza as duas colunas.                                                                      |
+| `auth-form-panel.tsx`            | Card da esquerda, com o logotipo, o conteúdo centralizado e a nota de acesso restrito.         |
+| `auth-showcase-panel.tsx`        | Painel da direita, com o fundo laranja, o brilho e a textura.                                  |
+| `auth-showcase-illustration.tsx` | Pilha de janelas do painel em perspectiva.                                                     |
+| `auth-showcase-window.tsx`       | Uma janela da ilustração, com variantes de profundidade; a da frente mostra o menu e um cupom. |
+| `auth-showcase-message.tsx`      | Frase sobre o produto no rodapé do painel.                                                     |
 
 ## Tipos da API
 
