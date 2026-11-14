@@ -44,6 +44,8 @@ const twMerge = extendTailwindMerge<'button-surface'>({
         'rise-in',
         'scale-in',
         'dash-in',
+        'slide-in',
+        'slide-out',
         'stamp',
         'shimmer',
         'pulse-dot',

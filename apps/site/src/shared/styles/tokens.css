@@ -412,6 +412,8 @@
   --animate-rise-in: rise-in var(--duration-slow) var(--ease-out) both;
   --animate-scale-in: scale-in var(--duration-base) var(--ease-flex) both;
   --animate-dash-in: dash-in var(--duration-slow) var(--ease-out) both;
+  --animate-slide-in: slide-in var(--duration-slow) var(--ease-out) both;
+  --animate-slide-out: slide-out var(--duration-base) var(--ease-in) both;
   --animate-stamp: stamp var(--duration-slower) var(--ease-flex) both;
   --animate-shimmer: shimmer 1.6s linear infinite;
   --animate-pulse-dot: pulse-dot 2s var(--ease-in-out) infinite;
@@ -466,6 +468,25 @@
     to {
       opacity: 1;
       transform: translateX(0) skewX(0deg);
+    }
+  }
+
+  /* Painéis laterais: a origem vem de `--slide-from` (-100% à esquerda, 100% à direita). */
+  @keyframes slide-in {
+    from {
+      transform: translateX(var(--slide-from, -100%));
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slide-out {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(var(--slide-from, -100%));
     }
   }
 

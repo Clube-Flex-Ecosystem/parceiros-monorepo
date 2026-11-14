@@ -148,7 +148,16 @@ src/
     │   │   │   ├── auth-showcase-window.tsx
     │   │   │   └── index.tsx
     │   │   ├── protected/
-    │   │   │   └── index.tsx
+    │   │   │   ├── index.tsx
+    │   │   │   ├── nav-link.tsx
+    │   │   │   ├── nav-links.tsx
+    │   │   │   ├── protected-breadcrumb.tsx
+    │   │   │   ├── protected-header.tsx
+    │   │   │   ├── protected-mobile-nav.tsx
+    │   │   │   ├── protected-navigation.ts
+    │   │   │   ├── protected-sidebar-content.tsx
+    │   │   │   ├── protected-sidebar.tsx
+    │   │   │   └── user-menu.tsx
     │   │   └── site/
     │   │       └── index.tsx
     │   └── ui/
@@ -163,7 +172,9 @@ src/
     │       │   └── use-field.ts
     │       └── primitives/
     │           ├── alert-dialog.tsx
+    │           ├── avatar.tsx
     │           ├── badge.tsx
+    │           ├── breadcrumb.tsx
     │           ├── button.tsx
     │           ├── card.tsx
     │           ├── checkbox.tsx
@@ -175,6 +186,7 @@ src/
     │           ├── scroll-area.tsx
     │           ├── select.tsx
     │           ├── separator.tsx
+    │           ├── sheet.tsx
     │           ├── skeleton.tsx
     │           ├── switch.tsx
     │           ├── tabs.tsx
@@ -253,10 +265,13 @@ Os componentes de `src/shared/components/ui/primitives/` usam os primitivos do R
 | `checkbox.tsx`, `radio-group.tsx` e `switch.tsx`    | Controles de seleção.                                                                                                  |
 | `select.tsx`                                        | Lista de seleção.                                                                                                      |
 | `dialog.tsx` e `alert-dialog.tsx`                   | Janela modal e janela de confirmação.                                                                                  |
+| `sheet.tsx`                                         | Painel lateral sobre o diálogo, com variantes `left` e `right`, usado como menu em telas pequenas.                     |
 | `dropdown-menu.tsx` e `tooltip.tsx`                 | Menu de ações e dica de contexto.                                                                                      |
 | `tabs.tsx`                                          | Abas.                                                                                                                  |
 | `card.tsx`                                          | Card com variantes `default`, `muted` e `ticket` (cupom, com linha picotada).                                          |
 | `badge.tsx`                                         | Selo com variantes de feedback e dos estados do parceiro (`draft`, `published` e `inactive`).                          |
+| `avatar.tsx`                                        | Avatar com imagem e iniciais de reserva, com variantes de tamanho `sm`, `md` e `lg`.                                   |
+| `breadcrumb.tsx`                                    | Trilha de navegação. O Radix não tem esse primitivo, então as partes usam a marcação acessível de `nav`, `ol` e `li`.  |
 | `separator.tsx`, `scroll-area.tsx` e `skeleton.tsx` | Divisor, área de rolagem e placeholder de carregamento.                                                                |
 
 Os utilitários de classes ficam em `src/shared/lib/`: `cn.ts` combina classes com `clsx` e `tailwind-merge`, já estendido com os tokens do design system para que conflitos como `text-sm` e `text-discount` sejam resolvidos, e `tv.ts` exporta o `tv` do `tailwind-variants` usando esse mesmo merge.
@@ -288,6 +303,23 @@ O `src/shared/components/layouts/auth/` monta as telas de `(auth)` em duas colun
 | `auth-showcase-illustration.tsx` | Pilha de janelas do painel em perspectiva.                                                     |
 | `auth-showcase-window.tsx`       | Uma janela da ilustração, com variantes de profundidade; a da frente mostra o menu e um cupom. |
 | `auth-showcase-message.tsx`      | Frase sobre o produto no rodapé do painel.                                                     |
+
+## Layout administrativo
+
+O `src/shared/components/layouts/protected/` monta as telas de `(protected)`: à esquerda, a partir de telas grandes, o menu lateral fixo sobre o fundo da página; à direita, o card do conteúdo, com um header fixo que mostra a trilha de navegação. Em telas menores o card ocupa a tela toda e o menu abre em um painel deslizante pelo botão do header. O `src/app/(protected)/layout.tsx` busca o administrador com `getCurrentUser`, repassando o cookie da sessão, e o entrega ao layout; sem usuário, a ficha do administrador não é exibida. O layout é dividido em partes para facilitar a manutenção.
+
+| Arquivo                         | Responsabilidade                                                                                                          |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `index.tsx`                     | Organiza o menu lateral e o card do conteúdo.                                                                             |
+| `protected-navigation.ts`       | Fonte única dos grupos do menu, dos rótulos da trilha de navegação e das regras de item ativo.                            |
+| `protected-sidebar.tsx`         | Coluna fixa do menu em telas grandes.                                                                                     |
+| `protected-mobile-nav.tsx`      | Botão e painel deslizante do menu em telas menores, que fecha ao trocar de rota.                                          |
+| `protected-sidebar-content.tsx` | Conteúdo do menu, compartilhado pela coluna e pelo painel: logotipo, grupos de links e ficha do administrador.            |
+| `nav-links.tsx`                 | Um grupo do menu, com rótulo, links e submenu.                                                                            |
+| `nav-link.tsx`                  | Um link do menu, com variantes de nível (`root`, `parent` e `nested`) e de estado ativo.                                  |
+| `protected-header.tsx`          | Header fixo do card, com o botão do menu em telas menores e a trilha de navegação.                                        |
+| `protected-breadcrumb.tsx`      | Trilha de navegação da rota atual; em telas pequenas mostra só a página atual.                                            |
+| `user-menu.tsx`                 | Ficha do administrador com avatar, nome e e-mail, que abre o menu da conta com o catálogo público e, quando houver, sair. |
 
 ## Tipos da API
 
