@@ -4,6 +4,6 @@ export default {
   printWidth: 100,
   semi: true,
   singleQuote: true,
-  tailwindStylesheet: './apps/site/src/styles/globals.css',
+  tailwindStylesheet: './apps/site/src/shared/styles/globals.css',
   trailingComma: 'all',
 };

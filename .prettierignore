@@ -1,1 +1,2 @@
 apps/api/src/database/prisma/generated/
+apps/site/src/shared/lib/api-types.d.ts

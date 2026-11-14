@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "generate:types": "openapi-typescript http://localhost:3000/docs/openapi.json -o src/shared/lib/api-types.d.ts",
     "typecheck": "next typegen && tsc --noEmit --project tsconfig.json"
   },
   "dependencies": {
@@ -19,6 +20,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "babel-plugin-react-compiler": "1.0.0",
+    "openapi-typescript": "^7.13.0",
     "tailwindcss": "4.3.3",
     "typescript": "^6.0.3"
   }

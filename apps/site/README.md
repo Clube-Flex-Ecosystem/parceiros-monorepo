@@ -39,8 +39,6 @@ src/
 │   │   ├── layout.tsx
 │   │   └── page.tsx
 │   └── layout.tsx
-├── config/
-│   └── env.ts
 ├── features/
 │   ├── admin/
 │   │   ├── categories/
@@ -95,11 +93,16 @@ src/
 │           ├── components/
 │           ├── schemas/
 │           └── utils/
-└── styles/
-    └── globals.css
+└── shared/
+    ├── config/
+    │   └── env.ts
+    ├── lib/
+    │   └── api-types.d.ts
+    └── styles/
+        └── globals.css
 ```
 
-As rotas ficam em `src/app/`, com nomes de pastas em inglês, e `src/features/` tem uma pasta para cada rota, agrupada por contexto (`site`, `auth` e `admin`). Cada feature organiza seu código em `api`, `components`, `schemas` e `utils`.
+As rotas ficam em `src/app/`, com nomes de pastas em inglês, e `src/features/` tem uma pasta para cada rota, agrupada por contexto (`site`, `auth` e `admin`). Cada feature organiza seu código em `api`, `components`, `schemas` e `utils`. O que é compartilhado entre as rotas fica em `src/shared/`: configuração (`config`), tipos gerados da API (`lib`) e estilos globais (`styles`).
 
 ## Variáveis de ambiente
 
@@ -112,6 +115,16 @@ As rotas ficam em `src/app/`, com nomes de pastas em inglês, e `src/features/` 
 
 O `src/app/layout.tsx` define título, descrição, URL canônica, Open Graph e Twitter, com `metadataBase` a partir de `PUBLIC_URL`. O favicon é definido com os logos de `public/`, usando `logo.svg` no tema claro e `logo-white.svg` no tema escuro.
 
+## Tipos da API
+
+Os tipos de `src/shared/lib/api-types.d.ts` são gerados a partir do documento OpenAPI exposto pela API em `/docs/openapi.json`, com `openapi-typescript`. O arquivo é gerado e não deve ser editado manualmente. Com a API em execução na porta padrão (`3000`), rode a partir da raiz do monorepo:
+
+```sh
+pnpm --filter @parceiros/site generate:types
+```
+
+Sempre que os contratos da API mudarem, execute o comando novamente e versione o arquivo atualizado.
+
 ## Scripts
 
 Execute a partir da raiz do monorepo:
@@ -120,4 +133,5 @@ Execute a partir da raiz do monorepo:
 pnpm --filter @parceiros/site dev
 pnpm --filter @parceiros/site build
 pnpm --filter @parceiros/site typecheck
+pnpm --filter @parceiros/site generate:types
 ```
