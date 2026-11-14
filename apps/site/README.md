@@ -157,10 +157,11 @@ src/
     │   ├── query-provider.tsx
     │   └── toast-provider.tsx
     └── styles/
-        └── globals.css
+        ├── globals.css
+        └── tokens.css
 ```
 
-As rotas ficam em `src/app/`, com nomes de pastas em inglês, e `src/features/` tem uma pasta para cada rota, agrupada por contexto (`site`, `auth` e `admin`). Cada feature organiza seu código em `api`, `components`, `schemas` e `utils`. A pasta `components` tem `pages`, com o componente da página onde os componentes de `ui` são reunidos, e `ui`, com os componentes exclusivos de cada página. A pasta `api` tem uma função por endpoint, usando o cliente de `src/shared/lib/`. As chamadas de `logout` e `get-current-user` ficam em `auth/login`, e as de parceiros ficam em `new-partner` (criação) e `edit-partner` (edição e estado). O que é compartilhado entre as rotas fica em `src/shared/`: componentes (`components`), com os layouts de cada contexto em `layouts` e os componentes de interface em `ui`, configuração (`config`), cliente e tipos da API (`lib`), providers globais (`providers`) e estilos globais (`styles`).
+As rotas ficam em `src/app/`, com nomes de pastas em inglês, e `src/features/` tem uma pasta para cada rota, agrupada por contexto (`site`, `auth` e `admin`). Cada feature organiza seu código em `api`, `components`, `schemas` e `utils`. A pasta `components` tem `pages`, com o componente da página onde os componentes de `ui` são reunidos, e `ui`, com os componentes exclusivos de cada página. A pasta `api` tem uma função por endpoint, usando o cliente de `src/shared/lib/`. As chamadas de `logout` e `get-current-user` ficam em `auth/login`, e as de parceiros ficam em `new-partner` (criação) e `edit-partner` (edição e estado). O que é compartilhado entre as rotas fica em `src/shared/`: componentes (`components`), com os layouts de cada contexto em `layouts` e os componentes de interface em `ui`, configuração (`config`), cliente e tipos da API (`lib`), providers globais (`providers`) e estilos globais e design tokens (`styles`).
 
 ## Variáveis de ambiente
 
@@ -172,6 +173,38 @@ As rotas ficam em `src/app/`, com nomes de pastas em inglês, e `src/features/` 
 ## SEO e favicon
 
 O `src/app/layout.tsx` define título, descrição, URL canônica, Open Graph e Twitter, com `metadataBase` a partir de `PUBLIC_URL`. O favicon é definido com os logos de `public/`, usando `logo.svg` no tema claro e `logo-white.svg` no tema escuro.
+
+## Design system
+
+O design system parte do cupom de benefício: o laranja do logotipo é a única cor de marca, sobre neutros frios, e aponta sempre para ação ou desconto. Os números de desconto usam a tipografia expandida e inclinada do logotipo, o recorte de cupom é a assinatura visual, e o relevo tátil fica restrito a botões e ilustrações.
+
+| Arquivo                         | Responsabilidade                                                                                                                                                                                             |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `src/shared/styles/tokens.css`  | Define paletas, cores semânticas (claro e escuro), estados do parceiro, fontes, escala tipográfica, espaços, tamanhos, raios, sombras, curvas, durações, camadas, animações, scrollbars e ajustes de WebKit. |
+| `src/shared/styles/globals.css` | Importa o Tailwind e os tokens, aplica a base do documento (fundo, texto, títulos, foco, seleção e movimento reduzido) e declara os utilitários do design system.                                            |
+
+### Fontes
+
+| Papel     | Fonte        | Uso                                                   |
+| --------- | ------------ | ----------------------------------------------------- |
+| `display` | Archivo      | Títulos e números de desconto, com largura expandida. |
+| `sans`    | Onest        | Texto de interface e conteúdo.                        |
+| `mono`    | Martian Mono | Cupons, códigos e números tabulares.                  |
+
+As fontes são carregadas em `src/app/layout.tsx` e expostas como `--font-archivo`, `--font-onest` e `--font-martian-mono`.
+
+### Utilitários
+
+| Utilitário                            | Uso                                                                                       |
+| ------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `button-primary` e `button-secondary` | Superfícies táteis de botão, com estados de hover, pressionado e desabilitado.            |
+| `ticket` e `ticket-perforation`       | Recorte lateral e linha picotada do cupom. A elevação vem de `drop-shadow-ticket` no pai. |
+| `slant`                               | Inclinação do logotipo, para números de desconto.                                         |
+| `illustration`                        | Cor e sombra projetada das ilustrações.                                                   |
+| `skeleton`                            | Placeholder de carregamento com brilho animado.                                           |
+| `scrollbar-none`                      | Oculta a barra de rolagem mantendo a rolagem.                                             |
+
+Os tokens do tema geram utilitários do Tailwind, como `bg-surface`, `text-muted-foreground`, `bg-status-published-soft`, `font-display`, `text-discount`, `h-control-md`, `max-w-content`, `px-gutter`, `rounded-lg`, `shadow-md`, `ease-flex` e `animate-dash-in`. Durações e camadas não têm namespace no Tailwind e são usadas como variáveis, por exemplo `duration-(--duration-fast)` e `z-(--z-modal)`. O tema escuro segue a preferência do sistema.
 
 ## Tipos da API
 

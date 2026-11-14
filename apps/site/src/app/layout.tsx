@@ -1,21 +1,31 @@
 import '../shared/styles/globals.css';
 
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Archivo, Martian_Mono, Onest } from 'next/font/google';
 
 import { env } from '../shared/config/env';
 import { NuqsProvider } from '../shared/providers/nuqs-provider';
 import { QueryProvider } from '../shared/providers/query-provider';
 import { ToastProvider } from '../shared/providers/toast-provider';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const archivo = Archivo({
+  variable: '--font-archivo',
   subsets: ['latin'],
+  axes: ['wdth'],
+  style: ['normal', 'italic'],
+  display: 'swap',
 });
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
+const onest = Onest({
+  variable: '--font-onest',
   subsets: ['latin'],
+  display: 'swap',
+});
+
+const martianMono = Martian_Mono({
+  variable: '--font-martian-mono',
+  subsets: ['latin'],
+  display: 'swap',
 });
 
 const siteName = 'Parceiros Clube Flex';
@@ -55,8 +65,11 @@ export const metadata: Metadata = {
 
 const RootLayout = ({ children }: LayoutProps<'/'>) => {
   return (
-    <html lang="pt-BR" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col">
+    <html
+      lang="pt-BR"
+      className={`${archivo.variable} ${onest.variable} ${martianMono.variable} h-full`}
+    >
+      <body className="flex min-h-full flex-col font-sans">
         <QueryProvider>
           <NuqsProvider>{children}</NuqsProvider>
         </QueryProvider>

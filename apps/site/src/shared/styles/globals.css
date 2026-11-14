@@ -1,1 +1,255 @@
 @import 'tailwindcss';
+@import './tokens.css';
+
+/* ------------------------------------------------------------------------- */
+/* Base                                                                       */
+/* ------------------------------------------------------------------------- */
+
+@layer base {
+  html {
+    background-color: var(--background);
+  }
+
+  body {
+    min-height: 100dvh;
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
+    font-feature-settings: 'ss01', 'cv11';
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-variation-settings: 'wdth' 118;
+    font-weight: 800;
+    letter-spacing: var(--tracking-tight);
+    text-wrap: balance;
+  }
+
+  h4,
+  h5,
+  h6 {
+    font-weight: 600;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  code,
+  kbd,
+  samp,
+  pre {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+
+  ::selection {
+    background-color: var(--selection);
+    color: var(--selection-foreground);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']) {
+    cursor: pointer;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ------------------------------------------------------------------------- */
+/* Botões táteis                                                              */
+/* Únicos componentes com skeumorfismo, ao lado das ilustrações. Luz vem de   */
+/* cima: borda superior clara, inferior escura e inversão ao pressionar.      */
+/* ------------------------------------------------------------------------- */
+
+@utility button-primary {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(
+        180deg,
+        var(--button-primary-top),
+        var(--button-primary-mid) 55%,
+        var(--button-primary-bottom)
+      )
+      padding-box,
+    linear-gradient(180deg, var(--button-primary-edge-top), var(--button-primary-edge-bottom))
+      border-box;
+  color: var(--primary-foreground);
+  text-shadow: var(--text-shadow-emboss);
+  box-shadow: var(--shadow-button-primary);
+  transition:
+    box-shadow var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out),
+    filter var(--duration-fast) var(--ease-out);
+
+  &:hover:not(:disabled) {
+    filter: brightness(1.05) saturate(1.05);
+  }
+
+  &:active:not(:disabled),
+  &[aria-pressed='true'] {
+    transform: translateY(1px);
+    background:
+      linear-gradient(180deg, var(--button-primary-bottom), var(--button-primary-mid)) padding-box,
+      linear-gradient(180deg, var(--button-primary-edge-bottom), var(--button-primary-edge-top))
+        border-box;
+    box-shadow: var(--shadow-button-primary-pressed);
+  }
+
+  &:disabled {
+    filter: grayscale(0.4);
+    opacity: 0.6;
+  }
+}
+
+@utility button-secondary {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(
+        180deg,
+        var(--button-secondary-top),
+        var(--button-secondary-mid) 55%,
+        var(--button-secondary-bottom)
+      )
+      padding-box,
+    linear-gradient(180deg, var(--button-secondary-edge-top), var(--button-secondary-edge-bottom))
+      border-box;
+  color: var(--button-secondary-foreground);
+  box-shadow: var(--shadow-button-secondary);
+  transition:
+    box-shadow var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out),
+    filter var(--duration-fast) var(--ease-out);
+
+  &:hover:not(:disabled) {
+    filter: brightness(0.98);
+  }
+
+  &:active:not(:disabled),
+  &[aria-pressed='true'] {
+    transform: translateY(1px);
+    background:
+      linear-gradient(180deg, var(--button-secondary-bottom), var(--button-secondary-top))
+        padding-box,
+      linear-gradient(180deg, var(--button-secondary-edge-bottom), var(--button-secondary-edge-top))
+        border-box;
+    box-shadow: var(--shadow-button-secondary-pressed);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+  }
+}
+
+/* ------------------------------------------------------------------------- */
+/* Cupom (assinatura visual)                                                  */
+/* Recorte semicircular nas laterais. Como a máscara corta box-shadow, a      */
+/* elevação do cupom vem de `drop-shadow-ticket` aplicado no elemento pai.    */
+/* Ajuste a altura do recorte com `--ticket-notch-position`.                  */
+/* ------------------------------------------------------------------------- */
+
+@utility ticket {
+  --ticket-notch-position: 50%;
+  mask:
+    radial-gradient(
+        circle var(--ticket-notch-size) at 0 var(--ticket-notch-position),
+        transparent 98%,
+        #000
+      )
+      left / 51% 100% no-repeat,
+    radial-gradient(
+        circle var(--ticket-notch-size) at 100% var(--ticket-notch-position),
+        transparent 98%,
+        #000
+      )
+      right / 51% 100% no-repeat;
+}
+
+/* Linha picotada entre as partes do cupom. */
+@utility ticket-perforation {
+  height: calc(var(--ticket-perforation-dot) * 2);
+  background-image: radial-gradient(
+    circle,
+    var(--border-strong) var(--ticket-perforation-dot),
+    transparent calc(var(--ticket-perforation-dot) + 0.5px)
+  );
+  background-size: var(--ticket-perforation-gap) 100%;
+  background-repeat: repeat-x;
+}
+
+/* Inclinação do logotipo, para números de desconto. */
+@utility slant {
+  display: inline-block;
+  transform: skewX(var(--slant));
+}
+
+/* ------------------------------------------------------------------------- */
+/* Ilustrações                                                                */
+/* Plástico macio: sombra projetada em camadas e cores próprias de           */
+/* ilustração, que acompanham o tema claro e escuro.                         */
+/* ------------------------------------------------------------------------- */
+
+@utility illustration {
+  color: var(--illustration-base);
+  filter: drop-shadow(0 2px 2px rgb(var(--shadow-tint) / 0.08))
+    drop-shadow(var(--drop-shadow-illustration));
+}
+
+/* ------------------------------------------------------------------------- */
+/* Utilitários de apoio                                                       */
+/* ------------------------------------------------------------------------- */
+
+@utility skeleton {
+  border-radius: var(--radius-md);
+  background: linear-gradient(
+    90deg,
+    var(--surface-muted) 25%,
+    var(--surface) 50%,
+    var(--surface-muted) 75%
+  );
+  background-size: 200% 100%;
+  animation: var(--animate-shimmer);
+}
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Notificações do sonner usando os tokens do app. */
+[data-sonner-toaster] {
+  --normal-bg: var(--surface-raised);
+  --normal-border: var(--border);
+  --normal-text: var(--foreground);
+  --success-bg: var(--success-soft);
+  --success-border: var(--success-soft);
+  --success-text: var(--success-soft-foreground);
+  --error-bg: var(--danger-soft);
+  --error-border: var(--danger-soft);
+  --error-text: var(--danger-soft-foreground);
+  --border-radius: var(--radius-lg);
+  font-family: var(--font-sans);
+}
