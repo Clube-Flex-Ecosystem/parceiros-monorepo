@@ -1,0 +1,16 @@
+import type { Partner, PartnerStatus } from '../models/partner.model.js';
+import type { CreateData, UpdateData } from '../../../../shared/domain/repositories/repository.js';
+
+export type PartnerFilter = {
+  status?: PartnerStatus;
+  categoryId?: string;
+};
+
+export interface PartnerRepository {
+  findById(id: string): Promise<Partner | null>;
+  findBySlug(slug: string): Promise<Partner | null>;
+  findAll(filter?: PartnerFilter): Promise<Partner[]>;
+  create(data: CreateData<Partner>): Promise<Partner>;
+  update(id: string, data: UpdateData<Partner>): Promise<Partner>;
+  updateStatus(id: string, status: PartnerStatus): Promise<Partner>;
+}

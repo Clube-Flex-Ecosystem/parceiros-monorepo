@@ -38,57 +38,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/auth/login": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Iniciar a sessão administrativa */
-        post: operations["login"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/logout": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Encerrar a sessão administrativa */
-        post: operations["logout"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/me": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Retornar o administrador autenticado */
-        get: operations["getCurrentUser"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/admin/categories": {
         parameters: {
             query?: never;
@@ -99,7 +48,7 @@ export interface paths {
         /** Listar categorias */
         get: operations["listCategories"];
         put?: never;
-        /** Criar category */
+        /** Criar categoria */
         post: operations["createCategory"];
         delete?: never;
         options?: never;
@@ -212,6 +161,57 @@ export interface paths {
         patch: operations["updatePartnerStatus"];
         trace?: never;
     };
+    "/auth/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Retornar o administrador autenticado */
+        get: operations["getCurrentUser"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/login": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Iniciar a sessão administrativa */
+        post: operations["login"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/logout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Encerrar a sessão administrativa */
+        post: operations["logout"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -224,116 +224,6 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    login: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: {
-            content: {
-                "application/json": {
-                    /** Format: email */
-                    email: string;
-                    password: string;
-                };
-            };
-        };
-        responses: {
-            /** @description Sessão iniciada */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Credencial inválida */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        code: string;
-                        message: string;
-                    };
-                };
-            };
-            /** @description Dados inválidos */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        code: string;
-                        message: string;
-                    };
-                };
-            };
-        };
-    };
-    logout: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Sessão encerrada */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Sessão ausente ou inválida */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        code: string;
-                        message: string;
-                    };
-                };
-            };
-        };
-    };
-    getCurrentUser: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Administrador autenticado */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Sessão ausente ou inválida */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        code: string;
-                        message: string;
-                    };
-                };
-            };
-        };
-    };
     listCategories: {
         parameters: {
             query?: never;
@@ -348,7 +238,17 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                        }[];
+                        meta: {
+                            total: number;
+                        };
+                    };
+                };
             };
             /** @description Não autenticado */
             401: {
@@ -379,12 +279,25 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Category criada */
+            /** @description Categoria criada */
             201: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": {
+                        /**
+                         * @example {
+                         *       "id": "category-1",
+                         *       "name": "Academias"
+                         *     }
+                         */
+                        data: {
+                            id: string;
+                            name: string;
+                        };
+                    };
+                };
             };
             /** @description Não autenticado */
             401: {
@@ -502,7 +415,20 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": {
+                        /**
+                         * @example {
+                         *       "id": "category-1",
+                         *       "name": "Academias"
+                         *     }
+                         */
+                        data: {
+                            id: string;
+                            name: string;
+                        };
+                    };
+                };
             };
             /** @description Não autenticado */
             401: {
@@ -556,7 +482,17 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                        }[];
+                        meta: {
+                            total: number;
+                        };
+                    };
+                };
             };
             /** @description Não autenticado */
             401: {
@@ -592,7 +528,20 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": {
+                        /**
+                         * @example {
+                         *       "id": "plan-1",
+                         *       "name": "Plano Premium"
+                         *     }
+                         */
+                        data: {
+                            id: string;
+                            name: string;
+                        };
+                    };
+                };
             };
             /** @description Não autenticado */
             401: {
@@ -710,7 +659,20 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": {
+                        /**
+                         * @example {
+                         *       "id": "plan-1",
+                         *       "name": "Plano Premium"
+                         *     }
+                         */
+                        data: {
+                            id: string;
+                            name: string;
+                        };
+                    };
+                };
             };
             /** @description Não autenticado */
             401: {
@@ -791,7 +753,28 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            description: string;
+                            address: string | null;
+                            generalInstructions: string | null;
+                            /** Format: uri */
+                            website: string | null;
+                            slug: string;
+                            isFeatured: boolean;
+                            /** @enum {string} */
+                            status: "draft" | "published" | "inactive";
+                            categoryId: string;
+                            /** Format: date-time */
+                            createdAt: string;
+                            /** Format: date-time */
+                            updatedAt: string;
+                        };
+                    };
+                };
             };
             /** @description Não autenticado */
             401: {
@@ -862,7 +845,28 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            description: string;
+                            address: string | null;
+                            generalInstructions: string | null;
+                            /** Format: uri */
+                            website: string | null;
+                            slug: string;
+                            isFeatured: boolean;
+                            /** @enum {string} */
+                            status: "draft" | "published" | "inactive";
+                            categoryId: string;
+                            /** Format: date-time */
+                            createdAt: string;
+                            /** Format: date-time */
+                            updatedAt: string;
+                        };
+                    };
+                };
             };
             /** @description Não autenticado */
             401: {
@@ -925,7 +929,28 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            name: string;
+                            description: string;
+                            address: string | null;
+                            generalInstructions: string | null;
+                            /** Format: uri */
+                            website: string | null;
+                            slug: string;
+                            isFeatured: boolean;
+                            /** @enum {string} */
+                            status: "draft" | "published" | "inactive";
+                            categoryId: string;
+                            /** Format: date-time */
+                            createdAt: string;
+                            /** Format: date-time */
+                            updatedAt: string;
+                        };
+                    };
+                };
             };
             /** @description Não autenticado */
             401: {
@@ -953,6 +978,129 @@ export interface operations {
             };
             /** @description Transição de estado ou publicação inválida */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        code: string;
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    getCurrentUser: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Administrador autenticado */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: string;
+                            /** Format: date-time */
+                            createdAt: string;
+                            /** Format: email */
+                            email: string;
+                            name: string;
+                            /** Format: date-time */
+                            updatedAt: string;
+                        };
+                    };
+                };
+            };
+            /** @description Sessão ausente ou inválida */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        code: string;
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    login: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    /** Format: email */
+                    email: string;
+                    password: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Sessão iniciada */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Credencial inválida */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        code: string;
+                        message: string;
+                    };
+                };
+            };
+            /** @description Dados inválidos */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        code: string;
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    logout: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Sessão encerrada */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Sessão ausente ou inválida */
+            401: {
                 headers: {
                     [name: string]: unknown;
                 };

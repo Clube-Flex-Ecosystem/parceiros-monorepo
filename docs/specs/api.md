@@ -278,6 +278,7 @@ endpoints:
 - **Autenticação:** as rotas em `/admin` exigem uma sessão administrativa válida.
 - **Sucesso com item:** `{ "data": { ... } }`.
 - **Sucesso com lista:** `{ "data": [ ... ], "meta": { "total": 0 } }`.
+- **Campos expostos:** os endpoints administrativos retornam apenas os campos previstos pelo contrato; dados internos de persistência não são expostos.
 - **Formato de erros:** `{ "code": "CODIGO_DO_ERRO", "message": "Descrição legível do erro" }`.
 
 ## Endpoints

@@ -1,6 +1,6 @@
-import { env } from '../src/config/env.js';
-import { prisma } from '../src/database/prisma/client.js';
-import { BcryptHashProvider } from '../src/providers/bcrypt-hash-provider.js';
+import { env } from '../src/env.js';
+import { prisma } from '../src/shared/infra/database/prisma/client.js';
+import { BcryptHashProvider } from '../src/shared/infra/providers/bcrypt-hash.provider.js';
 
 const ADMIN_NAME = 'Administrador';
 const ADMIN_EMAIL = 'admin@clubeflex.com.br';

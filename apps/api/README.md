@@ -14,108 +14,134 @@ prisma/
 └── seed.ts
 vitest.config.ts
 src/
+├── bootstrap.ts
+├── shared/
+│   ├── domain/
+│   │   ├── errors/
+│   │   ├── providers/
+│   │   ├── repositories/
+│   │   └── schemas/
+│   ├── helpers/
+│   │   ├── cookie-manager.helper.ts
+│   │   ├── format-response.helper.ts
+│   │   └── validate-schema.helper.ts
+│   └── infra/
+│       ├── database/
+│       │   └── prisma/
+│       └── http/
+│           ├── app.ts
+│           ├── docs/
+│           │   ├── document.ts
+│           │   └── openapi.ts
+│           ├── middlewares/
+│           │   ├── authenticated.middleware.ts
+│           │   ├── error-handler.middleware.ts
+│           │   ├── not-found.middleware.ts
+│           │   └── rate-limit.middleware.ts
+│           ├── providers/
+│           │   ├── bcrypt-hash.provider.ts
+│           │   ├── jsonwebtoken-jwt.provider.ts
+│           │   └── resend-mail.provider.ts
+│           └── routes/
+│               └── index.route.ts
 ├── @types/
 │   └── express.d.ts
-├── bootstrap.ts
-├── config/
-│   ├── cookie.ts
-│   └── env.ts
-├── controllers/
-│   ├── auth-controller.ts
-│   ├── category-controller.ts
-│   ├── partner-controller.ts
-│   └── plan-controller.ts
-├── http/
-│   ├── app.ts
-│   ├── docs/
-│   │   ├── document.ts
-│   │   └── openapi.ts
-│   └── middlewares/
-│       ├── authenticated.ts
-│       ├── error-handler.ts
-│       ├── not-found.ts
-│       └── rate-limit.ts
-├── routes/
-│   ├── auth-routes.ts
-│   ├── category-routes.ts
-│   ├── index.ts
-│   ├── partner-routes.ts
-│   └── plan-routes.ts
-├── domains/
-│   ├── errors/
-│   ├── models/
-│   ├── providers/
-│   └── repositories/
-├── helpers/
-├── schemas/
+├── features/
 │   ├── auth/
+│   │   ├── infra/
+│   │   │   ├── http/
+│   │   │   │   ├── routes/
+│   │   │   │   │   └── auth.route.ts
+│   │   │   │   └── controllers/
+│   │   │   │       ├── get-current-user.controller.ts
+│   │   │   │       ├── login.controller.ts
+│   │   │   │       └── logout.controller.ts
+│   │   │   └── repositories/
+│   │   │       └── prisma/
+│   │   │           └── user.repository.ts
+│   │   ├── application/
+│   │   └── domain/
+│   │       ├── models/
+│   │       │   └── user.model.ts
+│   │       ├── schemas/
+│   │       │   └── login.schema.ts
+│   │       └── repositories/
+│   │           └── user.repository.ts
 │   ├── category/
+│   │   ├── application/usecases/
+│   │   │   ├── create-category.usecase.ts
+│   │   │   ├── delete-category.usecase.ts
+│   │   │   ├── list-categories.usecase.ts
+│   │   │   └── update-category.usecase.ts
+│   │   ├── domain/
+│   │   │   ├── models/category.model.ts
+│   │   │   ├── repositories/category.repository.ts
+│   │   │   └── schemas/
+│   │   └── infra/
+│   │       ├── http/
+│   │       │   ├── controllers/
+│   │       │   └── routes/category.route.ts
+│   │       └── repositories/prisma/category.repository.ts
 │   ├── partner/
-│   ├── plan/
-│   └── shared/
-├── usecases/
-│   ├── auth/
-│   │   ├── get-current-user.ts
-│   │   ├── login.ts
-│   │   └── logout.ts
-│   ├── category/
-│   │   ├── create-category.ts
-│   │   ├── delete-category.ts
-│   │   ├── list-categories.ts
-│   │   └── update-category.ts
-│   ├── partner/
+│   │   ├── domain/
+│   │   │   ├── models/
+│   │   │   ├── repositories/
+│   │   │   └── schemas/
+│   │   └── infra/
+│   │       ├── http/
+│   │       │   ├── controllers/
+│   │       │   └── routes/partner.route.ts
+│   │       └── repositories/prisma/
 │   └── plan/
-│       ├── create-plan.ts
-│       ├── delete-plan.ts
-│       ├── list-plans.ts
-│       └── update-plan.ts
-├── repositories/
-│   └── prisma/
-│       ├── category-repository.ts
-│       ├── contact-repository.ts
-│       ├── partner-plan-discount-repository.ts
-│       ├── partner-repository.ts
-│       ├── plan-repository.ts
-│       └── user-repository.ts
-├── database/
-│   └── prisma/
-│       ├── client.ts
-│       └── generated/
-└── providers/
-    ├── bcrypt-hash-provider.ts
-    ├── jsonwebtoken-jwt-provider.ts
-    └── resend-mail-provider.ts
+│       ├── application/usecases/
+│       │   ├── create-plan.usecase.ts
+│       │   ├── delete-plan.usecase.ts
+│       │   ├── list-plans.usecase.ts
+│       │   └── update-plan.usecase.ts
+│       ├── domain/
+│       │   ├── models/plan.model.ts
+│       │   ├── repositories/plan.repository.ts
+│       │   └── schemas/
+│       └── infra/
+│           ├── http/
+│           │   ├── controllers/
+│           │   └── routes/plan.route.ts
+│           └── repositories/prisma/plan.repository.ts
 ```
 
 ## Responsabilidade de cada área
 
-| Caminho                     | Responsabilidade                                                                                                                                                  |
-| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `.env.example`              | Lista as variáveis de ambiente que podem configurar a API.                                                                                                        |
-| `prisma.config.ts`          | Configura o schema, a conexão e o seed usados pelas ferramentas de persistência.                                                                                  |
-| `vitest.config.ts`          | Configura o Vitest com reinicialização dos mocks entre os testes.                                                                                                 |
-| `prisma/schema.prisma`      | Declara a fonte de dados PostgreSQL, os modelos persistidos e a geração do cliente de acesso aos dados.                                                           |
-| `prisma/seed.ts`            | Cria ou atualiza o administrador inicial, usando a senha definida em `ADMIN_PASSWORD`; executado por `pnpm prisma:seed`.                                          |
-| `prisma/migrations/`        | Mantém o histórico versionado das mudanças no banco de dados.                                                                                                     |
-| `src/bootstrap.ts`          | Inicializa a aplicação.                                                                                                                                           |
-| `src/@types/`               | Estende os tipos de bibliotecas usadas pela aplicação.                                                                                                            |
-| `src/config/env.ts`         | Valida conexão de dados, credenciais JWT e Resend, além das configurações de execução e cookies.                                                                  |
-| `src/config/cookie.ts`      | Centraliza leitura, criação e remoção de cookies HTTP com `HttpOnly`, `SameSite=Lax` e expiração padrão de sete dias.                                             |
-| `src/http/app.ts`           | Configura o Express, CORS com credenciais, leitura de cookies, Swagger e os middlewares globais.                                                                  |
-| `src/controllers/`          | Agrupa e valida as entradas HTTP por módulo funcional; autenticação, categorias e planos delegam para seus casos de uso, enquanto parceiros permanece provisório. |
-| `src/http/docs/`            | Mantém o registry OpenAPI e a geração da documentação Swagger.                                                                                                    |
-| `src/http/middlewares/`     | Contém autenticação por sessão, limite de requisições, resposta de rota inexistente e tratamento de erros.                                                        |
-| `src/routes/`               | Declara as rotas HTTP por módulo, registra cada uma no OpenAPI e concentra seus prefixos no arquivo `index.ts`.                                                   |
-| `src/domains/errors/`       | Define erros de domínio, como `BaseError`, com códigos HTTP padronizados.                                                                                         |
-| `src/domains/models/`       | Define os modelos User, Partner, Category, Contact, PartnerPlanDiscount e Plan.                                                                                   |
-| `src/domains/providers/`    | Define as abstrações de hash de credenciais, tokens JWT e envio de e-mails usadas pelos casos de uso.                                                             |
-| `src/domains/repositories/` | Define os contratos de acesso para User, Partner e suas entidades associadas.                                                                                     |
-| `src/repositories/prisma/`  | Implementa os contratos de repositório com o cliente Prisma, sem tratamento local de erros de persistência.                                                       |
-| `src/helpers/`              | Reúne funções auxiliares, como formatação de respostas e validação de entradas.                                                                                   |
-| `src/schemas/`              | Define schemas reutilizáveis, separados por módulo, para as entradas HTTP e o formato universal de erro em `shared/`.                                             |
-| `src/usecases/`             | Implementa os fluxos de autenticação, categorias e planos, organizados por módulo e com um arquivo por caso de uso; parceiros fica reservado.                     |
-| `src/database/prisma/`      | Mantém o singleton do cliente de acesso ao PostgreSQL e o código gerado a partir do schema.                                                                       |
-| `src/providers/`            | Implementa hash de credenciais, tokens JWT e envio de e-mails com os serviços configurados pela aplicação.                                                        |
+| Caminho                              | Responsabilidade                                                                                                                                                 |
+| ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `.env.example`                       | Lista as variáveis de ambiente que podem configurar a API.                                                                                                       |
+| `prisma.config.ts`                   | Configura o schema, a conexão e o seed usados pelas ferramentas de persistência.                                                                                 |
+| `vitest.config.ts`                   | Configura o Vitest com reinicialização dos mocks entre os testes.                                                                                                |
+| `prisma/schema.prisma`               | Declara a fonte de dados PostgreSQL, os modelos persistidos e a geração do cliente de acesso aos dados.                                                          |
+| `prisma/seed.ts`                     | Cria ou atualiza o administrador inicial, usando a senha definida em `ADMIN_PASSWORD`; executado por `pnpm prisma:seed`.                                         |
+| `prisma/migrations/`                 | Mantém o histórico versionado das mudanças no banco de dados.                                                                                                    |
+| `src/bootstrap.ts`                   | Inicializa a aplicação.                                                                                                                                          |
+| `src/shared/`                        | Reúne componentes compartilhados entre os módulos, separados entre regras de domínio e infraestrutura.                                                           |
+| `src/shared/domain/`                 | Mantém erros, schemas, contratos de provider e contratos genéricos compartilhados entre as features.                                                             |
+| `src/env.ts`                         | Valida e expõe as variáveis de ambiente da API.                                                                                                                  |
+| `src/shared/infra/database/`         | Mantém o singleton do cliente Prisma e o código gerado a partir do schema.                                                                                       |
+| `src/shared/infra/http/`             | Mantém a configuração HTTP global, a documentação OpenAPI, os middlewares e o agregador compartilhado de rotas.                                                  |
+| `src/@types/`                        | Estende os tipos das bibliotecas usadas pela aplicação.                                                                                                          |
+| `src/features/`                      | Organiza a API por funcionalidade; cada feature é dividida em `infra/`, `application/` e `domain/`, com HTTP separado em rotas e controllers dentro de `infra/`. |
+| `src/features/auth/domain/`          | Mantém o modelo User, o schema de login e os contratos de acesso ao usuário.                                                                                     |
+| `src/features/category/`             | Reúne o domínio, os casos de uso, os controllers, as rotas e o repositório de categorias.                                                                        |
+| `src/features/partner/`              | Reúne o domínio, os controllers, as rotas e os repositórios de parceiros, contatos e descontos por plano.                                                        |
+| `src/features/plan/`                 | Reúne o domínio, os casos de uso, os controllers, as rotas e o repositório de planos.                                                                            |
+| `src/shared/infra/http/app.ts`       | Configura o Express, CORS com credenciais, leitura de cookies, Swagger e os middlewares globais.                                                                 |
+| `src/shared/infra/http/docs/`        | Mantém o registry OpenAPI e a geração da documentação Swagger.                                                                                                   |
+| `src/shared/infra/http/middlewares/` | Contém autenticação por sessão, limite de requisições, resposta de rota inexistente e tratamento de erros.                                                       |
+| `src/shared/infra/providers/`        | Implementa hash de credenciais, tokens JWT e envio de e-mails com os serviços configurados pela aplicação.                                                       |
+| `src/shared/helpers/`                | Reúne funções auxiliares, como gerenciamento de cookies, formatação de respostas e validação de entradas.                                                        |
+
+Os controllers das features usam `formatResponse` para padronizar respostas de sucesso no envelope `{ data, meta? }`. Listas incluem `meta.total`, e cada resposta de item expõe somente os campos previstos pelo contrato.
+Os schemas de resposta ficam junto ao domínio da feature e são usados também nos registros OpenAPI.
+O schema compartilhado de erro fica em `src/shared/domain/schemas/errors/error-response.schema.ts` e é declarado diretamente em cada resposta de erro do OpenAPI.
+Todos os contratos e implementações de providers ficam em `src/shared/domain/providers/` e `src/shared/infra/providers/`; as features apenas dependem desses contratos compartilhados.
+As variáveis de ambiente ficam em `src/env.ts`, no mesmo nível de `bootstrap.ts`, e o gerenciamento de cookies fica em `src/shared/helpers/cookie-manager.helper.ts`.
 
 ## Referências
 
